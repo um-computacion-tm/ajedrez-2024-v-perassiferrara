@@ -1,1 +1,2 @@
-print("Ajedrez")
+def a():
+    return "Ajedrez"
