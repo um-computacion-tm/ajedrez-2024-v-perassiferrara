@@ -1,6 +1,9 @@
 [run]
-source = main
+source =
+    clases
+    tests
 omit =
+    */test.py 
     venv/*
     */test/*
     */__init__.py
@@ -15,3 +18,4 @@ exclude_lines =
     if __name__ == "__main__":
     def suite
     __str__
+    main()
