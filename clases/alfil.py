@@ -28,4 +28,4 @@ class Alfil(Pieza):
             return True
         
         except ValueError as e:
-            print(e, "\n")
+            raise(e)

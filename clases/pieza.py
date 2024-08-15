@@ -1,3 +1,6 @@
+from excepciones import SelectionCancel
+from casilla import Casilla
+
 class Pieza():
     
     def __init__(self, color, x, y):
@@ -35,7 +38,7 @@ class Pieza():
                 raise ValueError("Coordenada X inválida")
         
         except ValueError as e:
-            print(e, "\n")
+            raise(e)
         
     def set_y(self, y):
         try:
@@ -46,7 +49,7 @@ class Pieza():
                 raise ValueError("Coordenada Y inválida")
         
         except ValueError as e:
-            print(e, "\n")
+            raise(e)
         
     def checkMismaCasilla(self, x_destino, y_destino):
         # Verificar si se intenta mover a la misma casilla
@@ -68,8 +71,7 @@ class Pieza():
         while True:
 
             if posicion_destino == "0":  # Si el input para destino es 0, se deselecciona la pieza
-                print("Selección cancelada\n")
-                return False
+                raise SelectionCancel("Selección cancelada")
 
             posicion_destino = posicion_destino.upper()
 
@@ -98,13 +100,11 @@ class Pieza():
                 # Asignar la pieza a la casilla destino 
                 tablero.set_cuadricula(x_destino, y_destino, self) 
 
-                # Print de la acción
+                # Devuelve la acción realizada
 
                 if ocupada_por_rival:
-                    print(f"{self.__nombre__} {self.__color__} {posicion_origen} captura a {pieza_destino.__nombre__} {pieza_destino.__color__} en {posicion_destino}\n")
+                    return(f"{self.__nombre__} {self.__color__} {posicion_origen} captura a {pieza_destino.__nombre__} {pieza_destino.__color__} en {posicion_destino}\n")
                 else:    
-                    print(f"{self.__nombre__} {self.__color__} {posicion_origen} se mueve a {posicion_destino}\n")
-            
-                return True
+                    return(f"{self.__nombre__} {self.__color__} {posicion_origen} se mueve a {posicion_destino}\n")
             
             return False

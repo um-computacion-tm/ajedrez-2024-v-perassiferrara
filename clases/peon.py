@@ -1,4 +1,5 @@
 from clases.pieza import Pieza
+from clases.casilla import Casilla
 
 class Peon(Pieza):
 
