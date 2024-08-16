@@ -67,19 +67,11 @@ class Pieza():
             return False
             
 
-    def mover(self, posicion_destino, tablero):
+    def mover(self, x_destino, y_destino, tablero):
         while True:
 
-            if posicion_destino == "0":  # Si el input para destino es 0, se deselecciona la pieza
-                raise SelectionCancel("Selección cancelada")
-
-            posicion_destino = posicion_destino.upper()
-
-            try:
-                x_destino, y_destino = tablero.traducir_a_coordenadas(posicion_destino)
-
-            except TypeError:
-                raise TypeError("Formato de entrada inválido. Use notación de ajedrez (a1, b7, etc.)")         
+            if x_destino == "10" and y_destino == "10":
+                raise SelectionCancel("Selección cancelada")     
 
             if self.checkMovimiento(x_destino, y_destino, tablero):
 
@@ -89,7 +81,7 @@ class Pieza():
                 # Cambiar casilla origen por vacía
                 tablero.set_cuadricula(self.x, self.y, Casilla(self.x, self.y))
 
-                posicion_origen = tablero.traducir_a_posicion(self.x, self.y)
+                x_origen, y_origen = self.__x__, self.__y__
 
                 # Cambiar coordenadas de la pieza
                 self.set_x(x_destino)
@@ -103,8 +95,8 @@ class Pieza():
                 # Devuelve la acción realizada
 
                 if ocupada_por_rival:
-                    return(f"{self.__nombre__} {self.__color__} {posicion_origen} captura a {pieza_destino.__nombre__} {pieza_destino.__color__} en {posicion_destino}\n")
+                    return(f"{self.__nombre__} {self.__color__} {x_origen},{y_origen} captura a {pieza_destino.__nombre__} {pieza_destino.__color__} en {x_destino},{y_destino}\n")
                 else:    
-                    return(f"{self.__nombre__} {self.__color__} {posicion_origen} se mueve a {posicion_destino}\n")
+                    return(f"{self.__nombre__} {self.__color__} {x_origen},{y_origen} se mueve a {x_destino},{y_destino}\n")
             
             return False

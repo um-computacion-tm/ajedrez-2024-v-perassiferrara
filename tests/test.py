@@ -31,9 +31,9 @@ class TestTablero(unittest.TestCase):
 
     def test_cambiar_turno(self):
         self.assertEqual(self.__tablero__.turno, "blanco")
-        self.__tablero__.cambiarTurno()
+        self.__tablero__.cambiar_turno()
         self.assertEqual(self.__tablero__.turno, "negro")
-        self.__tablero__.cambiarTurno()
+        self.__tablero__.cambiar_turno()
         self.assertEqual(self.__tablero__.turno, "blanco")
 
     def test_traducir_a_coordenadas_valida(self):
@@ -60,7 +60,7 @@ class TestTablero(unittest.TestCase):
             self.__tablero__.seleccionarPieza("A6")
 
     def test_seleccionar_pieza_oponente(self):
-        self.__tablero__.cambiarTurno()  # Cambia el turno a "negro"
+        self.__tablero__.cambiar_turno()  # Cambia el turno a "negro"
         with self.assertRaises(ColorError):
             self.__tablero__.seleccionarPieza("A1")
 

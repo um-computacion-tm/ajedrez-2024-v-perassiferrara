@@ -1,13 +1,13 @@
-from clases.tablero import Tablero
-from clases.excepciones import *
-from clases.pieza import *
-from clases.casilla import *
-from clases.peon import *
-from clases.torre import *
-from clases.caballo import *
-from clases.alfil import *
-from clases.dama import *
-from clases.rey import *
+from tablero import Tablero
+from excepciones import *
+from pieza import *
+from casilla import *
+from peon import *
+from torre import *
+from caballo import *
+from alfil import *
+from dama import *
+from rey import *
 
 
 
@@ -22,30 +22,29 @@ class JuegoAjedrez:
         if opcion not in ("1", "2"):
             return "Opción no válida"
         elif opcion == "2":
-            return "Juego terminado: Empate"
+            return "Cerrando juego"
         elif opcion == "1":
             return "Juego iniciado"
 
     def turno_actual(self):
         return f"Turno {self.__tablero__.num_turno}: {self.__tablero__.turno}"
 
-    def seleccionar_pieza(self, entrada):
+    def seleccionar_pieza(self, x, y):
         try:
-            if self.__tablero__.seleccionarPieza(entrada):
-                pieza = self.__tablero__.seleccionarPieza(entrada)
-                posicion = self.__tablero__.traducir_a_posicion(pieza.x, pieza.y)
-                return pieza, posicion
+            if self.__tablero__.seleccionarPieza(x, y):
+                pieza = self.__tablero__.seleccionarPieza(x, y)
+                return pieza
         except Exception as e:
-            return str(e)
+            raise e
 
-    def mover_pieza(self, pieza, entrada_destino):
+    def mover_pieza(self, pieza, x_destino, y_destino):
         try:
-            if pieza.mover(entrada_destino, self.__tablero__):
+            if pieza.mover(x_destino, y_destino, self.__tablero__):
                 if self.__tablero__.checkVictoria():
                     self.__tablero__ = Tablero()
                     return "Victoria"
             
-                return "Movimiento exitoso"
+                return pieza.mover(x_destino, y_destino, self.__tablero__)
         except Exception as e:
             return str(e)
 
@@ -53,7 +52,7 @@ class JuegoAjedrez:
         return str(self.__tablero__)
 
     def finalizar_juego(self):
-        return "Juego terminado: Empate"
+        return "\nJuego terminado: Empate\n"
 
     def cambiar_turno(self):
-        self.__tablero__.cambiarTurno()
+        self.__tablero__.cambiar_turno()

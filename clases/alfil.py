@@ -1,4 +1,4 @@
-from clases.pieza import Pieza
+from pieza import Pieza
 
 class Alfil(Pieza):
 
