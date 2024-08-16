@@ -19,18 +19,19 @@ class Peon(Pieza):
                 return True
         
         # Movimiento de dos casillas hacia adelante desde la posición inicial
-        if (x_destino == self.__x__ + (2 * direccion) and y_destino == self.__y__):
+        elif (x_destino == self.__x__ + (2 * direccion) and y_destino == self.__y__):
             if self.__x__ == (6 if self.__color__ == "blanco" else 1):
                 if isinstance(tablero.cuadricula(x_destino, y_destino), Casilla):
                     return True
 
         # Captura en diagonal
-        if (x_destino == self.__x__ + direccion and abs(y_destino - self.__y__) == 1):
+        elif (x_destino == self.__x__ + direccion and abs(y_destino - self.__y__) == 1):
             if isinstance(tablero.cuadricula(x_destino, y_destino), Pieza) and \
                tablero.cuadricula(x_destino, y_destino).color != self.__color__:
                 return True
 
         # Movimiento inválido
-        raise ValueError("Movimiento inválido. Solo puede avanzar una casilla vacía o \
+        else:
+            raise ValueError("Movimiento inválido. Solo puede avanzar una casilla vacía o \
                          capturar una pieza en diagonal hacia adelante, o avanzar dos \
                          casillas desde la posición inicial si están vacías.")

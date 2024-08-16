@@ -39,7 +39,7 @@ class JuegoAjedrez:
 
     def mover_pieza(self, pieza, x_destino, y_destino):
         try:
-            if pieza.mover(x_destino, y_destino, self.__tablero__):
+            if pieza.mover(x_destino, y_destino, self.__tablero__) != False:
                 if self.__tablero__.checkVictoria():
                     self.__tablero__ = Tablero()
                     return "Victoria"

@@ -86,30 +86,29 @@ class CLI:
 
                     resultado_movimiento = self.__juego__.mover_pieza(pieza, x_destino, y_destino)
 
+                    if resultado_movimiento == "Victoria":
+
+                        print(f"¡El jugador {self.turno} ha ganado!\n")
+                        print("Tablero final:\n")
+                        print(self)
+                        print("------------------------------------------------")
+
+                        self.__juego__.cambiar_turno()
+
+                        break
+
+                    else:
+
+                        print(resultado_movimiento + "\n")
+
+                        print("\nTablero actual:\n")
+                        print(self.__juego__.mostrar_tablero())
+                        
+                        self.__juego__.cambiar_turno()
+
                 except Exception as e:
                     print(e)
                     continue
-
-                if resultado_movimiento == "Victoria":
-
-                    print(f"¡El jugador {self.turno} ha ganado!\n")
-                    print("Tablero final:\n")
-                    print(self)
-                    print("------------------------------------------------")
-
-                    self.__juego__.cambiar_turno()
-
-                    break
-
-                elif resultado_movimiento == "Movimiento exitoso":
-
-                    print("\nTablero actual:\n")
-                    print(self.__juego__.mostrar_tablero())
-                    
-                    self.__juego__.cambiar_turno()
-
-                else:
-                    print(resultado_movimiento + "\n")
 
 
 def main():
