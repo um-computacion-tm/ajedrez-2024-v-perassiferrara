@@ -12,7 +12,7 @@ WORKDIR /ajedrez-2024-v-perassiferrara
 RUN pip install -r requirements.txt
 # instala dependencias y requirements
 
-CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python main.py"]
+CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python clases/interfaz.py"]
 
 
 # comandos para ejecutar el programa en una imagen de docker
