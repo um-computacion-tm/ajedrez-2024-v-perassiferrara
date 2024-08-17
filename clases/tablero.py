@@ -45,6 +45,9 @@ class Tablero():
             self.__cuadricula__[peon.x][peon.y] = peon
 
 
+    def get_pieza(self, x, y):
+        return self.__cuadricula__[x][y]    
+
 
     @property
     def turno(self):
@@ -69,7 +72,7 @@ class Tablero():
         pieza = self.__cuadricula__[x][y]
 
         if isinstance(pieza, Casilla):
-            raise EmptyError(f"No hay ninguna pieza en la casilla")
+            raise EmptyError("No hay ninguna pieza en la casilla")
 
         if pieza.color != self.__turno__:
             raise ColorError("No puedes seleccionar piezas de tu oponente")

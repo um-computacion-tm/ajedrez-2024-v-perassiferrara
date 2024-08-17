@@ -72,17 +72,18 @@ class CLI:
                 
                     print()
                     
-                    x, y = self.traducir_a_coordenadas(entrada)
+                    x_origen, y_origen = self.traducir_a_coordenadas(entrada)
                     
-                    resultado = self.__juego__.seleccionar_pieza(x, y)
+                    pieza = self.__juego__.seleccionar_pieza(x_origen, y_origen)
 
-                    pieza = resultado
-                    print(f"\n{pieza.nombre} {pieza.color} en {self.traducir_a_posicion(x,y)}\n") 
+                    print(f"\n{pieza.nombre} {pieza.color} en {self.traducir_a_posicion(x_origen,y_origen)}\n") 
                     print("Indique posición de destino (0 para cancelar selección):\n")
                     entrada_destino = input("--> ")
                     print()
 
                     x_destino, y_destino = self.traducir_a_coordenadas(entrada_destino)
+                    
+                    pieza_destino = self.__juego__.get_pieza(x_destino, y_destino)
 
                     resultado_movimiento = self.__juego__.mover_pieza(pieza, x_destino, y_destino)
 
@@ -98,8 +99,11 @@ class CLI:
                         break
 
                     else:
-
-                        print(resultado_movimiento + "\n")
+                        if resultado_movimiento == True: # Si se captura una pieza, resultado_movimiento es True
+                            print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} captura a {pieza_destino.nombre} {pieza_destino.color} en {self.traducir_a_posicion(x_destino,y_destino)}\n") 
+                        
+                        else:    
+                            print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} se mueve a {self.traducir_a_posicion(x_destino,y_destino)}\n")
 
                         print("\nTablero actual:\n")
                         print(self.__juego__.mostrar_tablero())

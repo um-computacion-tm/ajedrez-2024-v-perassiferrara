@@ -68,35 +68,31 @@ class Pieza():
             
 
     def mover(self, x_destino, y_destino, tablero):
-        while True:
+        if x_destino == "10" and y_destino == "10":
+            raise SelectionCancel("Selección cancelada")     
 
-            if x_destino == "10" and y_destino == "10":
-                raise SelectionCancel("Selección cancelada")     
+        if self.checkMovimiento(x_destino, y_destino, tablero):
 
-            if self.checkMovimiento(x_destino, y_destino, tablero):
+            self.checkMismaCasilla(x_destino, y_destino)
+            ocupada_por_rival = self.checkDestino(x_destino, y_destino, tablero)
 
-                self.checkMismaCasilla(x_destino, y_destino)
-                ocupada_por_rival = self.checkDestino(x_destino, y_destino, tablero)
+            # Cambiar casilla origen por vacía
+            tablero.set_cuadricula(self.x, self.y, Casilla(self.x, self.y))
 
-                # Cambiar casilla origen por vacía
-                tablero.set_cuadricula(self.x, self.y, Casilla(self.x, self.y))
 
-                x_origen, y_origen = self.__x__, self.__y__
+            # Cambiar coordenadas de la pieza
+            self.set_x(x_destino)
+            self.set_y(y_destino)
 
-                # Cambiar coordenadas de la pieza
-                self.set_x(x_destino)
-                self.set_y(y_destino)
 
-                pieza_destino = tablero.cuadricula(x_destino, y_destino)
+            # Asignar la pieza a la casilla destino 
+            tablero.set_cuadricula(x_destino, y_destino, self) 
 
-                # Asignar la pieza a la casilla destino 
-                tablero.set_cuadricula(x_destino, y_destino, self) 
+            # Devuelve la acción realizada
 
-                # Devuelve la acción realizada
-
-                if ocupada_por_rival:
-                    return(f"{self.__nombre__} {self.__color__} {x_origen},{y_origen} captura a {pieza_destino.__nombre__} {pieza_destino.__color__} en {x_destino},{y_destino}\n")
-                else:    
-                    return(f"{self.__nombre__} {self.__color__} {x_origen},{y_origen} se mueve a {x_destino},{y_destino}\n")
-            
-            return False
+            if ocupada_por_rival:
+                return True
+            else:    
+                return False
+        
+        return False

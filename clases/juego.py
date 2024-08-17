@@ -26,6 +26,9 @@ class JuegoAjedrez:
         elif opcion == "1":
             return "Juego iniciado"
 
+    def get_pieza(self, x, y):
+        return self.__tablero__.get_pieza(x, y)
+
     def turno_actual(self):
         return f"Turno {self.__tablero__.num_turno}: {self.__tablero__.turno}"
 
@@ -39,12 +42,13 @@ class JuegoAjedrez:
 
     def mover_pieza(self, pieza, x_destino, y_destino):
         try:
-            if pieza.mover(x_destino, y_destino, self.__tablero__) != False:
+            movimiento = pieza.mover(x_destino, y_destino, self.__tablero__)
+            if movimiento != False:
                 if self.__tablero__.checkVictoria():
                     self.__tablero__ = Tablero()
                     return "Victoria"
             
-                return pieza.mover(x_destino, y_destino, self.__tablero__)
+                return movimiento
         except Exception as e:
             return str(e)
 
