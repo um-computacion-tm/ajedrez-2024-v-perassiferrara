@@ -15,6 +15,10 @@ class JuegoAjedrez:
     def __init__(self):
         self.__tablero__ = Tablero()
 
+    @property
+    def tablero(self):
+        return self.__tablero__
+
     def iniciar_juego(self):
         return "Tablero Inicial:\n" + str(self.__tablero__)
 
@@ -40,18 +44,78 @@ class JuegoAjedrez:
         except Exception as e:
             raise e
 
-    def mover_pieza(self, pieza, x_destino, y_destino):
-        try:
-            movimiento = pieza.mover(x_destino, y_destino, self.__tablero__)
-            if movimiento != False:
-                if self.__tablero__.checkVictoria():
-                    self.__tablero__ = Tablero()
-                    return "Victoria"
+    # def mover_pieza(self, pieza, x_destino, y_destino):
+    #     try:
+    #         movimiento = pieza.mover(x_destino, y_destino, self.__tablero__)
+    #         if movimiento != False:
+    #             if self.__tablero__.checkVictoria():
+    #                 self.__tablero__ = Tablero()
+    #                 return "Victoria"
             
-                return movimiento
-        except Exception as e:
-            return str(e)
+    #             return movimiento
+    #     except Exception as e:
+    #         raise e
 
+    def checkMismaCasilla(self, x_origen, y_origen, x_destino, y_destino):
+        if x_origen == x_destino and y_origen == y_destino:
+            raise ValueError("No se puede mover a la misma casilla")
+
+
+
+    def validar_origen(self, x_origen, y_origen):
+
+        pieza = self.__tablero__.get_pieza(x_origen, y_origen)
+
+        self.__tablero__.checkCasillaVacia(pieza)
+        self.__tablero__.checkColorPieza(pieza)
+
+        return pieza
+
+
+    def validar_destino(self, x_origen, y_origen, x_destino, y_destino):
+
+        try:
+            pieza = self.get_pieza(x_origen, y_origen)
+            pieza_destino = self.get_pieza(x_destino, y_destino)
+
+            self.checkMismaCasilla(x_origen, y_origen, x_destino, y_destino)
+            self.__tablero__.checkDestino(pieza, pieza_destino)
+            pieza.checkMovimiento(x_destino, y_destino, self.__tablero__)
+
+        except Exception as e:
+            raise e
+
+
+
+
+    def mover_pieza(self, x_origen, y_origen, x_destino, y_destino):
+
+        pieza = self.get_pieza(x_origen, y_origen)
+    
+        try:
+
+            # Actualizar coordenadas internas de la pieza
+            pieza.mover(x_destino, y_destino)
+
+            # Asignar pieza a su nueva posición en el tablero 
+            self.__tablero__.set_pieza(x_destino, y_destino, pieza)
+
+            # Asignar casilla vacía a la posición de origen en el tablero
+            self.__tablero__.set_pieza(x_origen, y_origen, Casilla(x_origen, y_origen))
+
+            # Verifica condición de victoria
+            if self.__tablero__.checkVictoria():
+                return "Victoria"
+
+            # Si no es victoria, indica que el movimiento fue correcto
+            return True           
+
+        except Exception as e:  # Si ocurre algún error, devuelve el mensaje de error
+            raise e
+    
+    
+    
+    
     def mostrar_tablero(self):
         return str(self.__tablero__)
 

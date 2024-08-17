@@ -131,12 +131,12 @@ class TestChecksPiezas(unittest.TestCase):
 
     def test_check_destino_pieza_rival(self):
         pieza = Torre("blanco", 0, 0)
-        self.tablero.set_cuadricula(2, 0, Peon("negro", 2, 0))
+        self.tablero.set_pieza(2, 0, Peon("negro", 2, 0))
         self.assertTrue(pieza.checkDestino(2, 0, self.tablero))
 
     def test_check_destino_pieza_aliada(self):
         pieza = Torre("blanco", 0, 0)
-        self.tablero.set_cuadricula(2, 0, Peon("blanco", 2, 0))
+        self.tablero.set_pieza(2, 0, Peon("blanco", 2, 0))
         with self.assertRaises(ValueError):
             pieza.checkDestino(2, 0, self.tablero)
 
@@ -151,7 +151,7 @@ class TestMovimientosPiezas(unittest.TestCase):
         self.__tablero__.__cuadricula__ = [[Casilla(x=fila, y=columna) for columna in range(8)] for fila in range(8)]
         
         torre = Torre("blanco", 0, 0)
-        self.__tablero__.set_cuadricula(0, 0, torre)
+        self.__tablero__.set_pieza(0, 0, torre)
         # Movimiento válido
         self.assertTrue(torre.checkMovimiento(0, 5, self.__tablero__))  # Movimiento vertical
         self.assertTrue(torre.checkMovimiento(5, 0, self.__tablero__))  # Movimiento horizontal
@@ -161,7 +161,7 @@ class TestMovimientosPiezas(unittest.TestCase):
     @patch("builtins.print")
     def test_check_movimiento_caballo(self, mock_print):
         caballo = Caballo("blanco", 0, 0)
-        self.__tablero__.set_cuadricula(0, 0, caballo)
+        self.__tablero__.set_pieza(0, 0, caballo)
         # Movimiento válido
         self.assertTrue(caballo.checkMovimiento(2, 1, self.__tablero__))  # Movimiento en L
         self.assertTrue(caballo.checkMovimiento(1, 2, self.__tablero__))  # Movimiento en L
@@ -174,7 +174,7 @@ class TestMovimientosPiezas(unittest.TestCase):
         self.__tablero__.__cuadricula__ = [[Casilla(x=fila, y=columna) for columna in range(8)] for fila in range(8)]
 
         alfil = Alfil("blanco", 0, 0)
-        self.__tablero__.set_cuadricula(0, 0, alfil)
+        self.__tablero__.set_pieza(0, 0, alfil)
         # Movimiento válido
         self.assertTrue(alfil.checkMovimiento(3, 3, self.__tablero__))  # Movimiento diagonal
         # Movimiento inválido
@@ -187,7 +187,7 @@ class TestMovimientosPiezas(unittest.TestCase):
 
         dama = Dama("blanco", 0, 0)
         
-        self.__tablero__.set_cuadricula(0, 0, dama)
+        self.__tablero__.set_pieza(0, 0, dama)
         # Movimiento válido
         self.assertTrue(dama.checkMovimiento(0, 5, self.__tablero__))  # Movimiento horizontal
         self.assertTrue(dama.checkMovimiento(5, 5, self.__tablero__))  # Movimiento diagonal
@@ -200,7 +200,7 @@ class TestMovimientosPiezas(unittest.TestCase):
         self.__tablero__.__cuadricula__ = [[Casilla(x=fila, y=columna) for columna in range(8)] for fila in range(8)]
 
         rey = Rey("blanco", 4, 4)
-        self.__tablero__.set_cuadricula(4, 4, rey)
+        self.__tablero__.set_pieza(4, 4, rey)
         # Movimiento válido
         self.assertTrue(rey.checkMovimiento(5, 4, self.__tablero__))  # Movimiento vertical
         self.assertTrue(rey.checkMovimiento(4, 5, self.__tablero__))  # Movimiento horizontal
@@ -214,11 +214,11 @@ class TestMovimientosPiezas(unittest.TestCase):
         self.__tablero__.__cuadricula__ = [[Casilla(x=fila, y=columna) for columna in range(8)] for fila in range(8)]
         
         peon_blanco = Peon("blanco", 6, 0)
-        self.__tablero__.set_cuadricula(6, 0, peon_blanco)
+        self.__tablero__.set_pieza(6, 0, peon_blanco)
         peon_negro = Peon("negro", 1, 0)
-        self.__tablero__.set_cuadricula(1, 0, peon_negro)
+        self.__tablero__.set_pieza(1, 0, peon_negro)
         peon_negro2 = Peon("negro", 5, 1)
-        self.__tablero__.set_cuadricula(5, 1, peon_negro2)
+        self.__tablero__.set_pieza(5, 1, peon_negro2)
         # Movimiento válido
         self.assertTrue(peon_blanco.checkMovimiento(5, 0, self.__tablero__))  # Movimiento 1 casilla adelante
         self.assertTrue(peon_blanco.checkMovimiento(4, 0, self.__tablero__))  # Movimiento 2 casillas adelante

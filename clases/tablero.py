@@ -44,9 +44,12 @@ class Tablero():
             self.__cuadricula__[pieza_especial.x][pieza_especial.y] = pieza_especial
             self.__cuadricula__[peon.x][peon.y] = peon
 
-
     def get_pieza(self, x, y):
-        return self.__cuadricula__[x][y]    
+        return self.__cuadricula__[x][y]  
+
+    def set_pieza(self, x, y, objeto):
+        self.__cuadricula__[x][y] = objeto
+
 
 
     @property
@@ -61,31 +64,48 @@ class Tablero():
         self.__turno__ = "negro" if self.__turno__ == "blanco" else "blanco"
         self.__num_turno__ += 1
 
-    def cuadricula(self, x = None, y = None):
-        return self.__cuadricula__[x][y]
 
-    def set_cuadricula(self, x, y, objeto):
-        self.__cuadricula__[x][y] = objeto
+    
 
 
-    def seleccionarPieza(self, x, y):
-        pieza = self.__cuadricula__[x][y]
+    #Checks de seleccion de pieza origen
 
+    def checkCasillaVacia(self, pieza):
+        # Verificar si la posición seleccionada está vacía
         if isinstance(pieza, Casilla):
             raise EmptyError("No hay ninguna pieza en la casilla")
 
+    def checkColorPieza(self, pieza):
+        # Verificar si la pieza seleccionada es del color propio
         if pieza.color != self.__turno__:
             raise ColorError("No puedes seleccionar piezas de tu oponente")
 
-        return pieza
 
 
+
+
+    #Checks de movimiento de pieza origen a destino
+
+    def checkDestino(self, pieza, pieza_destino):
+        # Verificar si la casilla de destino está ocupada por una pieza aliada
+        
+        # Si está ocupada por una pieza aliada, manda un error
+        if isinstance(pieza_destino, Pieza) and pieza_destino.__color__ == pieza.color: 
+            raise ValueError("No se puede mover porque la casilla destino está ocupada por una pieza aliada")
+        
+        # Si está ocupada por una pieza oponente, devuelve True
+        elif isinstance(pieza_destino, Pieza) and pieza_destino.__color__ != pieza.color:
+            return True
+        
+        # Si no está ocupada por ninguna pieza, devuelve False
+        else:
+            return False
 
     def checkVictoria(self):
         for fila in self.__cuadricula__:
             for casilla in fila:
 
-                if isinstance(casilla, Pieza) and casilla.color != self.turno:
+                if isinstance(casilla, Pieza) and casilla.__color__ != self.turno:
                     return False
 
         return True

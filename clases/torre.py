@@ -19,13 +19,13 @@ class Torre(Pieza):
             if x_destino != self.__x__:
                 paso = 1 if x_destino > self.__x__ else -1
                 for x_comparacion in range(self.__x__ + paso, x_destino, paso):
-                    if isinstance(tablero.cuadricula(x_comparacion,self.y), Pieza):
+                    if isinstance(tablero.get_pieza(x_comparacion,self.y), Pieza):
                         raise ValueError("No se puede mover porque hay una pieza en el camino")
                     
             elif y_destino != self.__y__:
                 paso = 1 if y_destino > self.__y__ else -1
                 for y_comparacion in range(self.__y__ + paso, y_destino, paso):
-                    if isinstance(tablero.cuadricula(self.x,y_comparacion), Pieza):
+                    if isinstance(tablero.get_pieza(self.x,y_comparacion), Pieza):
                         raise ValueError("No se puede mover porque hay una pieza en el camino")
 
             return True

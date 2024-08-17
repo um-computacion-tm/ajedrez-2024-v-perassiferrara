@@ -69,27 +69,29 @@ class CLI:
                     print("\nIndique posición a seleccionar: ")
                     
                     entrada = input("--> ")
-                
                     print()
-                    
+
                     x_origen, y_origen = self.traducir_a_coordenadas(entrada)
                     
-                    pieza = self.__juego__.seleccionar_pieza(x_origen, y_origen)
+                    pieza = self.__juego__.validar_origen(x_origen, y_origen)
 
                     print(f"\n{pieza.nombre} {pieza.color} en {self.traducir_a_posicion(x_origen,y_origen)}\n") 
-                    print("Indique posición de destino (0 para cancelar selección):\n")
+                    
+
+
                     entrada_destino = input("--> ")
                     print()
 
                     x_destino, y_destino = self.traducir_a_coordenadas(entrada_destino)
+
+                    pieza_destino = self.__juego__.validar_destino(x_origen, y_origen, x_destino, y_destino)
                     
-                    pieza_destino = self.__juego__.get_pieza(x_destino, y_destino)
+                    resultado_movimiento = self.__juego__.mover_pieza(x_origen, y_origen, x_destino, y_destino)
 
-                    resultado_movimiento = self.__juego__.mover_pieza(pieza, x_destino, y_destino)
-
+                    
                     if resultado_movimiento == "Victoria":
 
-                        print(f"¡El jugador {self.turno} ha ganado!\n")
+                        print(f"¡El jugador {self.__juego__.turno} ha ganado!\n")
                         print("Tablero final:\n")
                         print(self)
                         print("------------------------------------------------")
@@ -99,10 +101,7 @@ class CLI:
                         break
 
                     else:
-                        if resultado_movimiento == True: # Si se captura una pieza, resultado_movimiento es True
-                            print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} captura a {pieza_destino.nombre} {pieza_destino.color} en {self.traducir_a_posicion(x_destino,y_destino)}\n") 
-                        
-                        else:    
+                        if resultado_movimiento == True: # Si el movimiento fue correcto, resultado_movimiento es True
                             print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} se mueve a {self.traducir_a_posicion(x_destino,y_destino)}\n")
 
                         print("\nTablero actual:\n")
@@ -111,7 +110,7 @@ class CLI:
                         self.__juego__.cambiar_turno()
 
                 except Exception as e:
-                    print(e)
+                    print(f"{e}\n")
                     continue
 
 
