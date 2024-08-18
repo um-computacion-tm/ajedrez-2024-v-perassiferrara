@@ -1,5 +1,5 @@
-from pieza import Pieza
-from casilla import Casilla
+from juego.pieza import Pieza
+from juego.casilla import Casilla
 
 class Peon(Pieza):
 

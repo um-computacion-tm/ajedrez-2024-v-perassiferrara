@@ -1,4 +1,4 @@
-from juego import JuegoAjedrez
+from juego.juego import JuegoAjedrez
 
 class CLI:
     def __init__(self):

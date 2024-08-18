@@ -1,13 +1,13 @@
-from tablero import Tablero
-from excepciones import *
-from pieza import *
-from casilla import *
-from peon import *
-from torre import *
-from caballo import *
-from alfil import *
-from dama import *
-from rey import *
+from juego.tablero import Tablero
+from juego.excepciones import *
+from juego.pieza import *
+from juego.casilla import *
+from juego.peon import *
+from juego.torre import *
+from juego.caballo import *
+from juego.alfil import *
+from juego.dama import *
+from juego.rey import *
 
 
 
@@ -43,18 +43,6 @@ class JuegoAjedrez:
                 return pieza
         except Exception as e:
             raise e
-
-    # def mover_pieza(self, pieza, x_destino, y_destino):
-    #     try:
-    #         movimiento = pieza.mover(x_destino, y_destino, self.__tablero__)
-    #         if movimiento != False:
-    #             if self.__tablero__.checkVictoria():
-    #                 self.__tablero__ = Tablero()
-    #                 return "Victoria"
-            
-    #             return movimiento
-    #     except Exception as e:
-    #         raise e
 
     def checkMismaCasilla(self, x_origen, y_origen, x_destino, y_destino):
         if x_origen == x_destino and y_origen == y_destino:

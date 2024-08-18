@@ -1,4 +1,4 @@
-from pieza import Pieza
+from juego.pieza import Pieza
 
 class Torre(Pieza):
     

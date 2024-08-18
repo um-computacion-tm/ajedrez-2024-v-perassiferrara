@@ -1,16 +1,16 @@
 import unittest
 from unittest.mock import patch
 
-from clases.tablero import *
-from clases.excepciones import *
-from clases.pieza import *
-from clases.casilla import *
-from clases.peon import *
-from clases.torre import *
-from clases.caballo import *
-from clases.alfil import *
-from clases.dama import *
-from clases.rey import *
+from juego.excepciones import *
+from juego.tablero import *
+from juego.pieza import *
+from juego.casilla import *
+from juego.peon import *
+from juego.torre import *
+from juego.caballo import *
+from juego.alfil import *
+from juego.dama import *
+from juego.rey import *
 
 class TestTablero(unittest.TestCase):
 

@@ -1,12 +1,12 @@
-from excepciones import *
-from pieza import *
-from casilla import *
-from peon import *
-from torre import *
-from caballo import *
-from alfil import *
-from dama import *
-from rey import *
+from juego.excepciones import *
+from juego.pieza import *
+from juego.casilla import *
+from juego.peon import *
+from juego.torre import *
+from juego.caballo import *
+from juego.alfil import *
+from juego.dama import *
+from juego.rey import *
 
 
 class Tablero():
