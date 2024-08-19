@@ -14,10 +14,27 @@ from juego.rey import *
 class JuegoAjedrez:
     def __init__(self):
         self.__tablero__ = Tablero()
+        self.__turno__ = "blanco"
+        self.__num_turno__ = 1
 
     @property
     def tablero(self):
         return self.__tablero__
+
+    @property
+    def turno(self):
+        return self.__turno__
+    
+    @property
+    def num_turno(self):
+        return self.__num_turno__
+    
+    def turno_actual(self):
+        return f"Turno {self.num_turno}: {self.turno}"
+
+    def cambiar_turno(self):
+        self.__turno__ = "negro" if self.__turno__ == "blanco" else "blanco"
+        self.__num_turno__ += 1
 
     def iniciar_juego(self):
         return "Tablero Inicial:\n" + str(self.__tablero__)
@@ -33,20 +50,14 @@ class JuegoAjedrez:
     def get_pieza(self, x, y):
         return self.__tablero__.get_pieza(x, y)
 
-    def turno_actual(self):
-        return f"Turno {self.__tablero__.num_turno}: {self.__tablero__.turno}"
-
-    def seleccionar_pieza(self, x, y):
-        try:
-            if self.__tablero__.seleccionarPieza(x, y):
-                pieza = self.__tablero__.seleccionarPieza(x, y)
-                return pieza
-        except Exception as e:
-            raise e
-
     def checkMismaCasilla(self, x_origen, y_origen, x_destino, y_destino):
         if x_origen == x_destino and y_origen == y_destino:
             raise ValueError("No se puede mover a la misma casilla")
+        
+    def checkColorPieza(self, pieza):
+        # Verificar si la pieza seleccionada es del color propio
+        if pieza.color != self.__turno__:
+            raise ColorError("No puedes seleccionar piezas de tu oponente")
 
 
 
@@ -55,7 +66,7 @@ class JuegoAjedrez:
         pieza = self.__tablero__.get_pieza(x_origen, y_origen)
 
         self.__tablero__.checkCasillaVacia(pieza)
-        self.__tablero__.checkColorPieza(pieza)
+        self.checkColorPieza(pieza)
 
         return pieza
 
@@ -92,7 +103,7 @@ class JuegoAjedrez:
             self.__tablero__.set_pieza(x_origen, y_origen, Casilla(x_origen, y_origen))
 
             # Verifica condición de victoria
-            if self.__tablero__.checkVictoria():
+            if self.checkVictoria():
                 return "Victoria"
 
             # Si no es victoria, indica que el movimiento fue correcto
@@ -101,7 +112,15 @@ class JuegoAjedrez:
         except Exception as e:  # Si ocurre algún error, devuelve el mensaje de error
             raise e
     
-    
+    def checkVictoria(self):
+        for fila in range(8):
+            for columna in range(8):
+                casilla = self.tablero.cuadricula(fila, columna)
+
+                if isinstance(casilla, Pieza) and casilla.color != self.turno:
+                    return False
+
+        return True    
     
     
     def mostrar_tablero(self):
@@ -109,6 +128,3 @@ class JuegoAjedrez:
 
     def finalizar_juego(self):
         return "\nJuego terminado: Empate\n"
-
-    def cambiar_turno(self):
-        self.__tablero__.cambiar_turno()

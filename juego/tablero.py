@@ -17,9 +17,6 @@ class Tablero():
                                 for fila in range(8)]
         # Al crear el tablero, se crean las casillas solas
 
-        self.__turno__ = "blanco"
-        self.__num_turno__ = 1
-
         self.inicializar_piezas()
 
     def inicializar_piezas(self):
@@ -50,23 +47,10 @@ class Tablero():
     def set_pieza(self, x, y, objeto):
         self.__cuadricula__[x][y] = objeto
 
-
-
-    @property
-    def turno(self):
-        return self.__turno__
-    
-    @property
-    def num_turno(self):
-        return self.__num_turno__
-    
-    def cambiar_turno(self):
-        self.__turno__ = "negro" if self.__turno__ == "blanco" else "blanco"
-        self.__num_turno__ += 1
-
-
-    
-
+    def cuadricula(self, x = None, y = None):
+        return self.__cuadricula__[x][y]
+ 
+ 
 
     #Checks de seleccion de pieza origen
 
@@ -74,14 +58,6 @@ class Tablero():
         # Verificar si la posición seleccionada está vacía
         if isinstance(pieza, Casilla):
             raise EmptyError("No hay ninguna pieza en la casilla")
-
-    def checkColorPieza(self, pieza):
-        # Verificar si la pieza seleccionada es del color propio
-        if pieza.color != self.__turno__:
-            raise ColorError("No puedes seleccionar piezas de tu oponente")
-
-
-
 
 
     #Checks de movimiento de pieza origen a destino
@@ -100,15 +76,6 @@ class Tablero():
         # Si no está ocupada por ninguna pieza, devuelve False
         else:
             return False
-
-    def checkVictoria(self):
-        for fila in self.__cuadricula__:
-            for casilla in fila:
-
-                if isinstance(casilla, Pieza) and casilla.__color__ != self.turno:
-                    return False
-
-        return True
 
     def __str__(self):
 

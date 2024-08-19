@@ -32,4 +32,4 @@ class Peon(Pieza):
                 return True
 
         # Movimiento inválido
-        raise ValueError("Movimiento inválido. Solo puede avanzar una casilla vacía ocapturar una pieza en diagonal hacia adelante, o avanzar dos casillas desde la posición inicial si están vacías.")
+        raise ValueError("Movimiento inválido para el peón.")

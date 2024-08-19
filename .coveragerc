@@ -1,11 +1,9 @@
 [run]
 source =
-    clases
-    tests
+    juego
 omit =
     */test.py 
     venv/*
-    */test/*
     */__init__.py
 [report]
 exclude_lines =
