@@ -11,11 +11,7 @@ class Rey(Pieza):
 
     def checkMovimiento(self, x_destino, y_destino, tablero):
 
-        try:
-            if abs(x_destino - self.__x__) > 1 or abs(y_destino - self.__y__) > 1:
-                raise ValueError("Movimiento inválido para el Rey. Debe moverse solo una casilla en cualquier dirección.")
+        if abs(x_destino - self.__x__) > 1 or abs(y_destino - self.__y__) > 1:
+            raise ValueError("Movimiento inválido para el Rey. Debe moverse solo una casilla en cualquier dirección.")
 
-            return True
-        
-        except ValueError as e:
-            raise(e)
+        return True

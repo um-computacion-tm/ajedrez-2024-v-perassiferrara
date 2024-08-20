@@ -115,9 +115,9 @@ class JuegoAjedrez:
     def checkVictoria(self):
         for fila in range(8):
             for columna in range(8):
-                casilla = self.tablero.cuadricula(fila, columna)
+                pieza = self.get_pieza(fila, columna)
 
-                if isinstance(casilla, Pieza) and casilla.color != self.turno:
+                if isinstance(pieza, Rey) and pieza.color != self.turno:
                     return False
 
         return True    

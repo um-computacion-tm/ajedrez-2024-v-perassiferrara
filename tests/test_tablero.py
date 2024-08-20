@@ -35,19 +35,5 @@ class TestTablero(unittest.TestCase):
             pieza = self.__juego__.get_pieza(x, y)
             self.assertIsInstance(pieza, tipo_pieza)
 
-    def test_check_victoria(self):
-        self.__juego__.tablero.set_pieza(0, 0, Torre("negro", 0, 0))
-        self.__juego__.tablero.set_pieza(1, 0, Peon("negro", 1, 0))
-        self.assertFalse(self.__juego__.checkVictoria())
-
-    def test_check_victoria_2(self):
-        self.__juego__.tablero.__cuadricula__ = [[Casilla(x=fila, y=columna) for columna in range(8)] for fila in range(8)]
-        pieza_blanca = Torre("blanco", 7, 7)
-        pieza_negra = Torre("negro", 0, 0)
-        self.__juego__.tablero.set_pieza(7, 7, pieza_blanca)
-        self.__juego__.tablero.set_pieza(0, 0, pieza_negra)
-        self.__juego__.tablero.set_pieza(0, 0, Casilla(0, 0))
-        self.assertTrue(self.__juego__.checkVictoria())
-
 if __name__ == "__main__":
     unittest.main()

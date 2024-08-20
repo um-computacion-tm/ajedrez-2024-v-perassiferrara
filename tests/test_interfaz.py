@@ -11,7 +11,7 @@ from juego.caballo import *
 from juego.alfil import *
 from juego.dama import *
 from juego.rey import *
-
+from unittest.mock import patch, MagicMock
 
 class TestInterfaz(unittest.TestCase):
 
@@ -28,6 +28,10 @@ class TestInterfaz(unittest.TestCase):
         interfaz = CLI()
         with self.assertRaises(ValueError):
             interfaz.traducir_a_coordenadas("Z9")
+            interfaz.traducir_a_coordenadas("D0")
+            interfaz.traducir_a_coordenadas("A14")
+            interfaz.traducir_a_coordenadas("H-1")
+            interfaz.traducir_a_coordenadas("D-5")
 
     def test_traducir_a_posicion(self):
         interfaz = CLI()

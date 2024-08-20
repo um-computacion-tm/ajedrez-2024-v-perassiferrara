@@ -91,14 +91,21 @@ class TestJuego(unittest.TestCase):
         rey_negro = Rey("negro", 7, 7)
         self.__juego__.tablero.set_pieza(7, 7, rey_negro)
 
-        # Con solo el rey del oponente, debería declarar victoria
+        # Con solo el rey negro, se deberia declarar victoria de negro
         self.assertTrue(self.__juego__.checkVictoria())
 
         # Colocar una pieza adicional del color opuesto
         peon_blanco = Peon("blanco", 6, 6)
         self.__juego__.tablero.set_pieza(6, 6, peon_blanco)
 
-        # No debería declarar victoria porque aún hay piezas oponentes
+        # Como sigue sin haber rey blanco, sigue siendo victoria de negro
+        self.assertTrue(self.__juego__.checkVictoria())
+
+        # Colocar un rey blanco
+        rey_blanco = Rey("blanco", 0, 0)
+        self.__juego__.tablero.set_pieza(0, 0, rey_blanco)
+
+        # Como ambos reyes están en el tablero, no se declara victoria de nadie
         self.assertFalse(self.__juego__.checkVictoria())
 
     def test_finalizar_juego(self):

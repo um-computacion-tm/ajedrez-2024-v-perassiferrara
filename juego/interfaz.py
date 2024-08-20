@@ -93,7 +93,7 @@ class CLI:
 
                         print(f"¡El jugador {self.__juego__.turno} ha ganado!\n")
                         print("Tablero final:\n")
-                        print(self)
+                        print(self.__juego__.mostrar_tablero())
                         print("------------------------------------------------")
 
                         self.__juego__.cambiar_turno()

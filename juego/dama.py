@@ -20,7 +20,7 @@ class Dama(Pieza):
             x_comparacion, y_comparacion = self.__x__ + paso_x, self.__y__ + paso_y
 
             while x_comparacion != x_destino or y_comparacion != y_destino:
-                if tablero.get_pieza(x_comparacion,y_comparacion) == Pieza:
+                if isinstance(tablero.get_pieza(x_comparacion,y_comparacion), Pieza):
                     raise ValueError("No se puede mover porque hay una pieza en el camino")
                 x_comparacion += paso_x
                 y_comparacion += paso_y

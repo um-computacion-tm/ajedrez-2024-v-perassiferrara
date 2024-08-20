@@ -2,6 +2,7 @@
 source =
     juego
 omit =
+    excepciones.py
     */test.py 
     venv/*
     */__init__.py

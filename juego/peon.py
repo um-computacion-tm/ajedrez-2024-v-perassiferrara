@@ -13,22 +13,23 @@ class Peon(Pieza):
     def checkMovimiento(self, x_destino, y_destino, tablero):
         direccion = -1 if self.__color__ == "blanco" else 1
 
+        pieza = tablero.get_pieza(x_destino, y_destino)
+
         # Movimiento de una casilla hacia adelante
-        if (tablero.get_pieza(x_destino, y_destino).x == self.x + direccion and tablero.get_pieza(x_destino, y_destino).y == self.y):
-            if isinstance(tablero.get_pieza(x_destino, y_destino), Casilla):
+        if (x_destino == self.__x__ + direccion and y_destino == self.__y__):
+            if isinstance(pieza, Casilla):
                 return True
         
         # Movimiento de dos casillas hacia adelante desde la posición inicial
-        elif (tablero.get_pieza(x_destino, y_destino).x == self.x + (2 * direccion) and tablero.get_pieza(x_destino, y_destino).y == self.y):
+        elif (x_destino == self.__x__ + (2 * direccion) and y_destino == self.__y__):
             if self.__x__ == (6 if self.__color__ == "blanco" else 1):
                 if isinstance(tablero.get_pieza(self.__x__ + direccion, self.__y__), Casilla) and \
-                    isinstance(tablero.get_pieza(x_destino, y_destino), Casilla):
+                    isinstance(pieza, Casilla):
                     return True
 
         # Captura en diagonal
-        elif (tablero.get_pieza(x_destino, y_destino).x == self.x + direccion and abs(tablero.get_pieza(x_destino, y_destino).y - self.y) == 1):
-            if isinstance(tablero.get_pieza(x_destino, y_destino), Pieza) and \
-               tablero.get_pieza(x_destino, y_destino).color != self.__color__:
+        elif (x_destino == self.__x__ + direccion and abs(y_destino - self.__y__) == 1):
+            if isinstance(pieza, Pieza) and pieza.color != self.__color__:
                 return True
 
         # Movimiento inválido
