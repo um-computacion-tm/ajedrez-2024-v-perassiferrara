@@ -3,6 +3,3 @@ class ColorError(Exception):
 
 class EmptyError(Exception):
     pass
-
-class SelectionCancel(Exception):
-    pass
