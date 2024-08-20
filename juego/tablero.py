@@ -66,11 +66,11 @@ class Tablero():
         # Verificar si la casilla de destino está ocupada por una pieza aliada
         
         # Si está ocupada por una pieza aliada, manda un error
-        if isinstance(pieza_destino, Pieza) and pieza_destino.__color__ == pieza.color: 
+        if isinstance(pieza_destino, Pieza) and pieza_destino.color == pieza.color: 
             raise ValueError("No se puede mover porque la casilla destino está ocupada por una pieza aliada")
         
         # Si está ocupada por una pieza oponente, devuelve True
-        elif isinstance(pieza_destino, Pieza) and pieza_destino.__color__ != pieza.color:
+        elif isinstance(pieza_destino, Pieza) and pieza_destino.color != pieza.color:
             return True
         
         # Si no está ocupada por ninguna pieza, devuelve False

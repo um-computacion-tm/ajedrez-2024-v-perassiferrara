@@ -113,11 +113,11 @@ class JuegoAjedrez:
             raise e
     
     def checkVictoria(self):
-        for fila in range(8):
-            for columna in range(8):
-                pieza = self.get_pieza(fila, columna)
+        for x_origen in range(8):
+            for y_origen in range(8):
+                pieza = self.get_pieza(x_origen, y_origen)
 
-                if isinstance(pieza, Rey) and pieza.color != self.turno:
+                if isinstance(pieza, Rey) and pieza.color != self.__turno__:
                     return False
 
         return True    

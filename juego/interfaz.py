@@ -1,4 +1,5 @@
 from juego.juego import JuegoAjedrez
+import sys
 
 class CLI:
     def __init__(self):
@@ -44,7 +45,7 @@ class CLI:
 
             elif resultado == "Cerrando juego":
                 print("\n" + resultado + "\n")
-                break
+                sys.exit()
 
             elif resultado == "Juego iniciado":
                 print()
@@ -65,53 +66,57 @@ class CLI:
                 break
 
             elif opcion == "1":
-                try:
-                    print("\nIndique posición a seleccionar: ")
+                self.mostrar_menu_seleccion()
+                
+    def mostrar_menu_seleccion(self):
+        while True:
+            try:
+                print("\nIndique posición a seleccionar: ")
+                
+                entrada = input("--> ")
+                print()
+
+                x_origen, y_origen = self.traducir_a_coordenadas(entrada)
+                
+                pieza = self.__juego__.validar_origen(x_origen, y_origen)
+
+                print(f"\n{pieza.nombre} {pieza.color} en {self.traducir_a_posicion(x_origen,y_origen)}\n") 
+                
+
+
+                entrada_destino = input("--> ")
+                print()
+
+                x_destino, y_destino = self.traducir_a_coordenadas(entrada_destino)
+
+                pieza_destino = self.__juego__.validar_destino(x_origen, y_origen, x_destino, y_destino)
+                
+                resultado_movimiento = self.__juego__.mover_pieza(x_origen, y_origen, x_destino, y_destino)
+
+                
+                if resultado_movimiento == "Victoria":
+
+                    print(f"¡El jugador {self.__juego__.turno} ha ganado!\n")
+                    print("Tablero final:\n")
+                    print(self.__juego__.mostrar_tablero())
+                    print("------------------------------------------------")
+
+                    self.__juego__.cambiar_turno()
+
+                    break
+
+                else:
+                    if resultado_movimiento == True: # Si el movimiento fue correcto, resultado_movimiento es True
+                        print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} se mueve a {self.traducir_a_posicion(x_destino,y_destino)}\n")
+
+                    print("\nTablero actual:\n")
+                    print(self.__juego__.mostrar_tablero())
                     
-                    entrada = input("--> ")
-                    print()
+                    self.__juego__.cambiar_turno()
 
-                    x_origen, y_origen = self.traducir_a_coordenadas(entrada)
-                    
-                    pieza = self.__juego__.validar_origen(x_origen, y_origen)
-
-                    print(f"\n{pieza.nombre} {pieza.color} en {self.traducir_a_posicion(x_origen,y_origen)}\n") 
-                    
-
-
-                    entrada_destino = input("--> ")
-                    print()
-
-                    x_destino, y_destino = self.traducir_a_coordenadas(entrada_destino)
-
-                    pieza_destino = self.__juego__.validar_destino(x_origen, y_origen, x_destino, y_destino)
-                    
-                    resultado_movimiento = self.__juego__.mover_pieza(x_origen, y_origen, x_destino, y_destino)
-
-                    
-                    if resultado_movimiento == "Victoria":
-
-                        print(f"¡El jugador {self.__juego__.turno} ha ganado!\n")
-                        print("Tablero final:\n")
-                        print(self.__juego__.mostrar_tablero())
-                        print("------------------------------------------------")
-
-                        self.__juego__.cambiar_turno()
-
-                        break
-
-                    else:
-                        if resultado_movimiento == True: # Si el movimiento fue correcto, resultado_movimiento es True
-                            print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} se mueve a {self.traducir_a_posicion(x_destino,y_destino)}\n")
-
-                        print("\nTablero actual:\n")
-                        print(self.__juego__.mostrar_tablero())
-                        
-                        self.__juego__.cambiar_turno()
-
-                except Exception as e:
-                    print(f"{e}\n")
-                    continue
+            except Exception as e:
+                print(f"{e}\n")
+                break
 
 
 def main():
