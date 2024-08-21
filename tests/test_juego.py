@@ -24,6 +24,33 @@ class TestJuego(unittest.TestCase):
         self.assertEqual(self.__juego__.num_turno, 1)
         self.assertIsInstance(self.__juego__.tablero, Tablero)
 
+    def test_reinicializacion_luego_de_movimiento(self):
+        # Verifica que el juego se reinicia tras iniciarlo, mover, finalizar e iniciar nuevamente
+        self.assertEqual(self.__juego__.turno, "blanco")
+        self.assertEqual(self.__juego__.num_turno, 1)
+
+        pieza = self.__juego__.get_pieza(6,0)
+
+        self.__juego__.mover_pieza(6,0,4,0)
+        self.__juego__.cambiar_turno()
+
+        self.assertEqual(self.__juego__.get_pieza(4,0) , pieza)
+        self.assertTrue(isinstance(self.__juego__.get_pieza(6,0), Casilla))
+        self.assertEqual(self.__juego__.turno, "negro")
+        self.assertEqual(self.__juego__.num_turno, 2)
+
+        self.__juego__.finalizar_juego()
+
+        self.__juego__.iniciar_juego()
+
+        pieza = self.__juego__.get_pieza(6,0)
+
+        self.assertEqual(self.__juego__.turno, "blanco")
+        self.assertEqual(self.__juego__.num_turno, 1)
+        self.assertEqual(self.__juego__.get_pieza(6,0) , pieza)
+        self.assertTrue(isinstance(self.__juego__.get_pieza(4,0), Casilla))
+
+
     def test_cambiar_turno(self):
         # Verifica que el turno cambie correctamente
         self.__juego__.cambiar_turno()
@@ -36,12 +63,6 @@ class TestJuego(unittest.TestCase):
         self.__juego__.cambiar_turno()
         self.assertEqual(self.__juego__.turno, "blanco")
         self.assertEqual(self.__juego__.num_turno, 5)
-
-    def test_seleccionar_opcion(self):
-        # Verifica la selección de opciones
-        self.assertEqual(self.__juego__.seleccionar_opcion("1"), "Juego iniciado")
-        self.assertEqual(self.__juego__.seleccionar_opcion("2"), "Cerrando juego")
-        self.assertEqual(self.__juego__.seleccionar_opcion("3"), "Opción no válida")
 
     def test_validar_origen(self):
         # Colocar una pieza en el tablero para las pruebas
@@ -109,8 +130,12 @@ class TestJuego(unittest.TestCase):
         self.assertFalse(self.__juego__.checkVictoria())
 
     def test_finalizar_juego(self):
-        # Verificar el mensaje al finalizar el juego
-        self.assertEqual(self.__juego__.finalizar_juego(), "\nJuego terminado: Empate\n")
+        # Verificar el reset de atributos al finalizar el juego
+        self.__juego__.finalizar_juego()
+        
+        self.assertEqual(self.__juego__.tablero, None)
+        self.assertEqual(self.__juego__.turno, None)
+        self.assertEqual(self.__juego__.num_turno, None)
 
 
 

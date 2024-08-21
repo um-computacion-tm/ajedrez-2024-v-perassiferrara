@@ -1,5 +1,6 @@
 from juego.juego import JuegoAjedrez
 import sys
+from juego.excepciones import *
 
 class CLI:
     def __init__(self):
@@ -11,12 +12,7 @@ class CLI:
     def traducir_a_coordenadas(self, notacion_ajedrez):
         notacion_ajedrez = notacion_ajedrez.upper()
 
-        if notacion_ajedrez == "0":
-            y = 10
-            x = 10
-            return x, y
-
-        elif notacion_ajedrez in self.__posiciones__:
+        if notacion_ajedrez in self.__posiciones__:
             # Si la posicion dada existe en el tablero, devuelve las coordenadas
             y = self.__columnas__.index(notacion_ajedrez[0].upper())
             x = self.__filas__.index(notacion_ajedrez[1])
@@ -31,38 +27,38 @@ class CLI:
 
     def mostrar_menu_principal(self):
         while True:
-            print("\nJuego de Ajedrez [Por Valentino Perassi Ferrara]")
-            print("------------------------------------------------\n")
-            print("Elige una opción:\n")
-            print("1. Iniciar juego")
-            print("2. Salir\n")
+            print(("\nJuego de Ajedrez [Por Valentino Perassi Ferrara]\n") + \
+            ("------------------------------------------------\n") + \
+            ("\nElige una opción:\n") + \
+            ("\n1. Iniciar juego\n") + \
+            ("2. Salir\n"))
 
             opcion = input("--> ")
-            resultado = self.__juego__.seleccionar_opcion(opcion)
+            try:
+                resultado = self.__juego__.seleccionar_opcion(opcion)
 
-            if resultado == "Opción no válida":
-                print("\n" + resultado + "\n")
+                if resultado == "Cerrando juego":
+                    print("\n" + resultado + "\n")
+                    sys.exit()
 
-            elif resultado == "Cerrando juego":
-                print("\n" + resultado + "\n")
-                sys.exit()
-
-            elif resultado == "Juego iniciado":
-                print()
-                print(self.__juego__.iniciar_juego())
-                self.mostrar_menu_juego()
+                elif resultado == "Juego iniciado":
+                    print(("\n") + (self.__juego__.iniciar_juego()))
+                    self.mostrar_menu_juego()
+            
+            except SelectionError as e:
+                print("\n" + str(e) + "\n")
 
     def mostrar_menu_juego(self):
         while True:
-            print(self.__juego__.turno_actual())
-            print("\n1. Seleccionar pieza (a7, b1, d3, etc.): ")
-            print("2. Terminar juego en empate\n")
+            print((self.__juego__.turno_actual()) + "\n" + \
+            ("\n1. Seleccionar pieza (a7, b1, d3, etc.): ") + \
+            ("\n2. Terminar juego en empate\n"))
 
-            print("Seleccione una opción: ")
             opcion = input("--> ")
 
             if opcion == "2":
-                print(self.__juego__.finalizar_juego())
+                self.__juego__.finalizar_juego
+                print("\nJuego terminado: Empate\n")
                 break
 
             elif opcion == "1":
@@ -113,6 +109,7 @@ class CLI:
                     print(self.__juego__.mostrar_tablero())
                     
                     self.__juego__.cambiar_turno()
+                    break
 
             except Exception as e:
                 print(f"{e}\n")

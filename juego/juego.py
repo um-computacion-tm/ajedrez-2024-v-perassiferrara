@@ -37,11 +37,19 @@ class JuegoAjedrez:
         self.__num_turno__ += 1
 
     def iniciar_juego(self):
-        return "Tablero Inicial:\n" + str(self.__tablero__)
+        self.__tablero__ = Tablero()
+        self.__turno__ = "blanco"
+        self.__num_turno__ = 1
+        return "Tablero Inicial:\n\n" + str(self.__tablero__)
+
+    def finalizar_juego(self):
+        self.__tablero__ = None
+        self.__turno__ = None
+        self.__num_turno__ = None
 
     def seleccionar_opcion(self, opcion):
         if opcion not in ("1", "2"):
-            return "Opción no válida"
+            raise SelectionError("Opcion no valida")
         elif opcion == "2":
             return "Cerrando juego"
         elif opcion == "1":
@@ -126,5 +134,3 @@ class JuegoAjedrez:
     def mostrar_tablero(self):
         return str(self.__tablero__)
 
-    def finalizar_juego(self):
-        return "\nJuego terminado: Empate\n"
