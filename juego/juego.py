@@ -121,14 +121,17 @@ class JuegoAjedrez:
             raise e
     
     def checkVictoria(self):
+        rey_oponente = "♔" if self.__turno__ == "blanco" else "♚"
+        rey_oponente_vivo = True
+
         for x_origen in range(8):
             for y_origen in range(8):
                 pieza = self.get_pieza(x_origen, y_origen)
-
-                if isinstance(pieza, Rey) and pieza.color != self.__turno__:
-                    return False
-
-        return True    
+                
+                if str(pieza) == rey_oponente:
+                    rey_oponente_vivo = False
+        if rey_oponente_vivo:
+            return True
     
     
     def mostrar_tablero(self):

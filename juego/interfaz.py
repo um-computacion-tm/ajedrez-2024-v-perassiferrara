@@ -97,10 +97,10 @@ class CLI:
                     print(self.__juego__.mostrar_tablero())
                     print("------------------------------------------------")
 
-                    self.__juego__.cambiar_turno()
+                    self.__juego__.finalizar_juego()
 
-                    break
-
+                    self.mostrar_menu_principal()
+                    
                 else:
                     if resultado_movimiento == True: # Si el movimiento fue correcto, resultado_movimiento es True
                         print(f"{pieza.nombre} {pieza.color} {self.traducir_a_posicion(x_origen,y_origen)} se mueve a {self.traducir_a_posicion(x_destino,y_destino)}\n")
