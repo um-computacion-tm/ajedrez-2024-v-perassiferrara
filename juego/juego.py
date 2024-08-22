@@ -55,6 +55,9 @@ class JuegoAjedrez:
     def checkDestino(self, pieza, pieza_destino):
         # Verificar si la casilla de destino está ocupada por una pieza aliada
         
+        if not (0 <= pieza_destino.x <= 7 and 0 <= pieza_destino.y <= 7):
+            raise ValueError("Posición no válida. Use casillas del tablero (a-h y 1-8)")
+        
         # Si está ocupada por una pieza aliada, manda un error
         if isinstance(pieza_destino, Pieza) and pieza_destino.color == pieza.color: 
             raise ValueError("No se puede mover porque la casilla destino está ocupada por una pieza aliada")
@@ -88,9 +91,6 @@ class JuegoAjedrez:
             
             pieza = self.get_pieza(x_origen, y_origen)
             pieza_destino = self.get_pieza(x_destino, y_destino)
-
-            if not (0 <= x_destino <= 7 and 0 <= y_destino <= 7):
-                raise ValueError("Posición no válida. Use casillas del tablero (a-h y 1-8)")
 
             self.checkMismaCasilla(x_origen, y_origen, x_destino, y_destino)
             self.checkDestino(pieza, pieza_destino)
