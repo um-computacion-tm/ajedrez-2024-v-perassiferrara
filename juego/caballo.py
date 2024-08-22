@@ -2,10 +2,8 @@ from juego.pieza import Pieza
 
 class Caballo(Pieza):
 
-    def __init__(self, color, x, y):
-        super().__init__(color, x, y)
-        self.__nombre__ = "Caballo"
-        self.__tipos_movimiento__ = ("especial")
+    __nombre__ = "Caballo"
+    __tipos_movimiento__ = ("especial")
 
     def __str__(self):
         return "♞" if self.color == "blanco" else "♘"

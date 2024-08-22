@@ -4,9 +4,10 @@ class Peon(Pieza):
 
     def __init__(self, color, x, y):
         super().__init__(color, x, y)
-        self.__nombre__ = "Peón"
-        self.__primera_posicion__ = True
-        self.__tipos_movimiento__ = ("peon")
+        self.__primera_posicion__ = True # Indica si la instancia de peón está en su posición inicial
+
+    __nombre__ = "Peón"
+    __tipos_movimiento__ = ("peon")
 
     @property
     def primera_posicion(self):

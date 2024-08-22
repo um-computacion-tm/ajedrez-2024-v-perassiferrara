@@ -2,10 +2,8 @@ from juego.pieza import Pieza
 
 class Rey(Pieza):
 
-    def __init__(self, color, x, y):
-        super().__init__(color, x, y)
-        self.__nombre__ = "Rey"
-        self.__tipos_movimiento__ = ("especial")
+    __nombre__ = "Rey"
+    __tipos_movimiento__ = ("especial")
 
     def __str__(self):
         return "♚" if self.__color__ == "blanco" else "♔"

@@ -1,11 +1,13 @@
 class Pieza():
     
-    def __init__(self, color, x, y):
+    def __init__(self, color, x, y): # Definición de la clase Pieza con sus atributos
         self.__color__ = color
         self.__x__ = x
         self.__y__ = y
-        self.__nombre__ = ""
-        self.__tipos_movimiento__ = ("")
+
+
+
+    # Los métodos @property permiten acceder a los atributos de la clase pieza desde fuera
 
     @property
     def color(self):
@@ -23,14 +25,16 @@ class Pieza():
     def y(self):
         return self.__y__
 
+
+    # Método que devuelve True si el tipo de movimiento es permitido por la pieza
     def puede_mover(self, tipo_movimiento):
         return tipo_movimiento in self.__tipos_movimiento__
 
+    # Método que cambia las coordenadas de la pieza a las especificadas
     def mover(self, x_destino, y_destino):
-
-            # Cambiar coordenadas de la pieza
             self.__x__ = x_destino 
             self.__y__ = y_destino
 
-    def checkMovimiento(self, x_destino, y_destino):
+    # Método a implementar en cada pieza para indicar como se puede mover 
+    def checkMovimiento(self, x_destino, y_destino): 
         pass

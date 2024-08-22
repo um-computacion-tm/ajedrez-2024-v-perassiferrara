@@ -2,10 +2,8 @@ from juego.pieza import Pieza
 
 class Alfil(Pieza):
 
-    def __init__(self, color, x, y):
-        super().__init__(color, x, y)
-        self.__nombre__ = "Alfil"
-        self.__tipos_movimiento__ = ("diagonal")
+    __nombre__ = "Alfil"
+    __tipos_movimiento__ = ("diagonal")
 
     def __str__(self):
         return "♝" if self.__color__ == "blanco" else "♗"
