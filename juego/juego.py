@@ -99,10 +99,8 @@ class JuegoAjedrez:
                     self.check_camino_diagonal(x_origen, y_origen, x_destino, y_destino)
                 
             elif isinstance(pieza, (Torre, Dama)):
-                if x_origen != x_destino and y_origen == y_destino:
-                    self.check_camino_vertical(x_origen, x_destino, y_origen)
-                if y_origen != y_destino and x_origen == x_destino:
-                    self.check_camino_horizontal(x_origen, y_origen, y_destino)
+                if y_origen == y_destino or x_origen == x_destino:
+                    self.check_camino_perpendicular(x_origen, y_origen, x_destino, y_destino)
 
             elif isinstance(pieza, Peon):
                 if y_origen == y_destino:
@@ -123,25 +121,26 @@ class JuegoAjedrez:
 
 
 
-    def check_camino_vertical(self, x_origen, x_destino, y_origen):
+    def check_camino_perpendicular(self, x_origen, y_origen, x_destino, y_destino):
+        if y_origen == y_destino: # Movimiento vertical
+            coordenada_origen = x_origen
+            coordenada_destino = x_destino
+            movimiento = "vertical"
 
-        paso = 1 if x_destino > x_origen else -1
-        for x_comparacion in range(x_origen + paso, x_destino, paso):
-            if isinstance(self.get_pieza(x_comparacion,y_origen), Pieza):
-                raise ValueError("No se puede mover porque hay una pieza en el camino")
+        elif x_origen == x_destino: # Movimiento horizontal
+            coordenada_origen = y_origen
+            coordenada_destino = y_destino
+            movimiento = "horizontal"
 
-        return True
+        paso = 1 if coordenada_destino > coordenada_origen else -1
 
-
-    def check_camino_horizontal(self, x_origen, y_origen, y_destino):
-
-        paso = 1 if y_destino > y_origen else -1
-        for y_comparacion in range(y_origen + paso, y_destino, paso):
-            if isinstance(self.get_pieza(x_origen,y_comparacion), Pieza):
-                raise ValueError("No se puede mover porque hay una pieza en el camino")
-
-        return True
-        
+        for coordenada_comparacion in range(coordenada_origen + paso, coordenada_destino, paso):
+            if movimiento == "vertical":
+                if isinstance(self.get_pieza(coordenada_comparacion,y_origen), Pieza):
+                    raise ValueError("No se puede mover porque hay una pieza en el camino")
+            elif movimiento == "horizontal":
+                if isinstance(self.get_pieza(x_origen,coordenada_comparacion), Pieza):
+                    raise ValueError("No se puede mover porque hay una pieza en el camino")   
 
     def check_camino_diagonal(self, x_origen, y_origen, x_destino, y_destino):
                     
