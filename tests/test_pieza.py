@@ -20,6 +20,11 @@ class TestPieza(unittest.TestCase):
     def setUp(self):
         self.__juego__ = JuegoAjedrez()
 
+    # El checkMovimiento de la clase Pieza no hace nada por sí solo, ya que debe ser implementado en cada pieza
+    def test_check_movimiento_pass(self): 
+        a = Pieza("blanco", 0, 0)
+        self.assertEqual(a.checkMovimiento(2,2), None)
+
     def test_mover_pieza_exito(self): # Con este método solo se cambian las coordenadas internas
         torre = self.__juego__.get_pieza(0, 0)
         torre.mover(3, 0)
@@ -35,13 +40,17 @@ class TestPieza(unittest.TestCase):
 
     def test_check_destino_pieza_rival(self):
         pieza = Torre("blanco", 0, 0)
+        self.__juego__.tablero.set_pieza(0, 0, pieza)
         pieza_destino = Peon("negro", 2, 0)
-        self.assertTrue(self.__juego__.checkDestino(pieza, pieza_destino))
+        self.__juego__.tablero.set_pieza(2, 0, pieza_destino)
+        self.assertTrue(self.__juego__.checkDestino(0,0,2,0))
 
     def test_check_destino_vacio(self):
         pieza = Torre("blanco", 0, 0)
+        self.__juego__.tablero.set_pieza(0, 0, pieza)
         pieza_destino = Casilla(2, 0)
-        self.assertFalse(self.__juego__.checkDestino(pieza, pieza_destino))
+        self.__juego__.tablero.set_pieza(2, 0, pieza_destino)
+        self.assertFalse(self.__juego__.checkDestino(0,0,2,0))
 
     def test_peon_primer_movimiento(self):
         peon = self.__juego__.get_pieza(6, 0)
@@ -127,6 +136,12 @@ class TestPeon(unittest.TestCase):
         #Verifica que el peón puede moverse una casilla hacia adelante si está vacío el destino.
         self.assertTrue(self.__juego__.validar_destino(1, 4, 2, 4))
 
+    def test_peon_movimiento_avance_uno_no_valido(self):
+        #Verifica que el peón no puede moverse una casilla hacia adelante si está ocupada por otra pieza.
+        self.__juego__.tablero.set_pieza(2, 4, Peon("blanco", 2, 4))
+        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 2, 4))
+        # Aca tuve que utilizar lambda para poder capturar el error que se lanza
+
     def test_peon_movimiento_avance_dos_valido(self):
         #Verifica que el peón puede moverse dos casillas hacia adelante desde su posición inicial.
         self.assertTrue(self.__juego__.validar_destino(1, 4, 3, 4))
@@ -137,11 +152,17 @@ class TestPeon(unittest.TestCase):
         self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(2, 4, 4, 4))
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
+    def test_peon_movimiento_avance_dos_no_valido2(self):
+        #Verifica que el peón no puede moverse dos casillas si hay una pieza en el camino.
+        self.__juego__.tablero.set_pieza(2, 4, Peon("blanco", 2, 4))
+        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 3, 4))
+        # Aca tuve que utilizar lambda para poder capturar el error que se lanza
+
     def test_peon_movimiento_diagonal_captura_valida(self):
         #Verifica que el peón puede capturar una pieza en diagonal.
         pieza_adversario = Peon("blanco", 2, 3)
         self.__juego__.tablero.set_pieza(2, 3, pieza_adversario)
-        self.assertTrue(self.__juego__.mover_pieza(1, 4, 2, 3))
+        self.assertTrue(self.__juego__.validar_destino(1, 4, 2, 3))
 
     def test_peon_movimiento_diagonal_no_captura(self):
         #Verifica que el peón no puede moverse en diagonal si no hay una pieza para capturar.

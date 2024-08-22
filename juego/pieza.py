@@ -7,7 +7,7 @@ class Pieza():
 
 
 
-    # Los métodos @property permiten acceder a los atributos de la clase pieza desde fuera
+    # Los métodos @property (propiedades) permiten acceder a los atributos de la clase pieza desde el exterior 
 
     @property
     def color(self):

@@ -96,6 +96,14 @@ class TestJuego(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.__juego__.validar_destino(1, 1, 1, 1)
 
+        # Mover a una casilla fuera del tablero debería lanzar excepción
+        with self.assertRaises(ValueError):
+            self.__juego__.validar_destino(1, 1, 9, 9)
+
+        # Seleccionar una casilla fuera del tablero debería lanzar excepción
+        with self.assertRaises(ValueError):
+            self.__juego__.validar_origen(9, 9)
+
     def test_mover_pieza(self):
         # Colocar piezas en el tablero para las pruebas
         peon_blanco = Peon("blanco", 1, 1)
