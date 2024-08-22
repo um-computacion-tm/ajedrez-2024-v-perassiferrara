@@ -43,7 +43,10 @@ class CLI:
                     sys.exit()
 
                 elif opcion == "1":
-                    print(("\n") + "Juego Iniciado" + "\n" + (self.__juego__.iniciar_juego()))
+                    self.__juego__.iniciar_juego()
+                    print("\n" + "Juego Iniciado" + "\n" + "\n" + \
+                        "Tablero Inicial:\n\n" + self.__juego__.mostrar_tablero())
+                          
                     self.mostrar_menu_juego()
             
             except SelectionError as e:
@@ -51,14 +54,14 @@ class CLI:
 
     def mostrar_menu_juego(self):
         while True:
-            print((self.__juego__.turno_actual()) + "\n" + \
+            print((f"Turno {self.__juego__.num_turno}: {self.__juego__.turno}") + "\n" + \
             ("\n1. Seleccionar pieza (a7, b1, d3, etc.): ") + \
             ("\n2. Terminar juego en empate\n"))
 
             opcion = input("--> ")
 
             if opcion == "2":
-                self.__juego__.finalizar_juego
+                self.__juego__.finalizar_juego()
                 print("\nJuego terminado: Empate\n")
                 break
 

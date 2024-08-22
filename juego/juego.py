@@ -28,9 +28,7 @@ class JuegoAjedrez:
     @property
     def num_turno(self):
         return self.__num_turno__
-    
-    def turno_actual(self):
-        return f"Turno {self.num_turno}: {self.turno}"
+
 
     def cambiar_turno(self):
         self.__turno__ = "negro" if self.__turno__ == "blanco" else "blanco"
@@ -40,7 +38,6 @@ class JuegoAjedrez:
         self.__tablero__ = Tablero()
         self.__turno__ = "blanco"
         self.__num_turno__ = 1
-        return "Tablero Inicial:\n\n" + str(self.__tablero__)
 
     def finalizar_juego(self):
         self.__tablero__ = None
@@ -54,15 +51,6 @@ class JuegoAjedrez:
         if x_origen == x_destino and y_origen == y_destino:
             raise ValueError("No se puede mover a la misma casilla")
         
-    def checkColorPieza(self, pieza):
-        # Verificar si la pieza seleccionada es del color propio
-        if pieza.color != self.__turno__:
-            raise ColorError("No puedes seleccionar piezas de tu oponente")
-
-    def checkCasillaVacia(self, pieza):
-        # Verificar si la posición seleccionada está vacía
-        if isinstance(pieza, Casilla):
-            raise EmptyError("No hay ninguna pieza en la casilla")
 
     def checkDestino(self, pieza, pieza_destino):
         # Verificar si la casilla de destino está ocupada por una pieza aliada
@@ -83,8 +71,13 @@ class JuegoAjedrez:
 
         pieza = self.__tablero__.get_pieza(x_origen, y_origen)
 
-        self.checkCasillaVacia(pieza)
-        self.checkColorPieza(pieza)
+        # Verificar si la posición seleccionada está vacía
+        if isinstance(pieza, Casilla):
+            raise EmptyError("No hay ninguna pieza en la casilla")
+
+        # Verificar si la pieza seleccionada es del color propio (del turno actual)
+        if pieza.color != self.__turno__:
+            raise ColorError("No puedes seleccionar piezas de tu oponente")
 
         return pieza
 
@@ -117,11 +110,8 @@ class JuegoAjedrez:
                 elif y_origen != y_destino:
                     self.check_camino_diagonal_peon(x_origen, y_origen, x_destino, y_destino)
 
-            elif isinstance(pieza, Caballo):
-                pass  # El caballo no tiene restricciones de camino
-
-            elif isinstance(pieza, Rey):
-                pass  # El rey no tiene restricciones de camino
+            elif isinstance(pieza, (Caballo, Rey)):
+                pass  # El caballo y el reyno tiene restricciones de camino
 
             else:
                 raise ValueError("Movimiento inválido para esta pieza.")
