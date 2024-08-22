@@ -5,6 +5,7 @@ class Caballo(Pieza):
     def __init__(self, color, x, y):
         super().__init__(color, x, y)
         self.__nombre__ = "Caballo"
+        self.__tipos_movimiento__ = ("especial")
 
     def __str__(self):
         return "♞" if self.color == "blanco" else "♘"

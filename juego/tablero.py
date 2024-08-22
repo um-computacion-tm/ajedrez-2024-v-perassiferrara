@@ -15,12 +15,12 @@ class Tablero():
         self.__cuadricula__ = [[Casilla(x = fila, y = columna)
                                 for columna in range(8)]
                                 for fila in range(8)]
-        # Al crear el tablero, se crean las casillas solas
+        # Al crear el tablero, se crean las casillas solas (vacias)
 
         self.inicializar_piezas()
 
     def inicializar_piezas(self):
- 
+
         piezas_especiales_inicio = [Torre, Caballo, Alfil, Dama, Rey, Alfil, Caballo, Torre]
 
         # Piezas blancas

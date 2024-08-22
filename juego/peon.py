@@ -6,6 +6,7 @@ class Peon(Pieza):
         super().__init__(color, x, y)
         self.__nombre__ = "Peón"
         self.__primera_posicion__ = True
+        self.__tipos_movimiento__ = ("peon")
 
     @property
     def primera_posicion(self):

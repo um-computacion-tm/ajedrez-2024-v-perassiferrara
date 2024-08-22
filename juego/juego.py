@@ -89,27 +89,30 @@ class JuegoAjedrez:
             pieza = self.get_pieza(x_origen, y_origen)
             pieza_destino = self.get_pieza(x_destino, y_destino)
 
+            if not (0 <= x_destino <= 7 and 0 <= y_destino <= 7):
+                raise ValueError("Posición no válida. Use casillas del tablero (a-h y 1-8)")
+
             self.checkMismaCasilla(x_origen, y_origen, x_destino, y_destino)
             self.checkDestino(pieza, pieza_destino)
             pieza.checkMovimiento(x_destino, y_destino)
 
 
-            if isinstance(pieza, (Alfil, Dama)):
+            if pieza.puede_mover("diagonal"):
                 if x_origen != x_destino and y_origen != y_destino:
                     self.check_camino_diagonal(x_origen, y_origen, x_destino, y_destino)
                 
-            elif isinstance(pieza, (Torre, Dama)):
+            elif pieza.puede_mover("perpendicular"):
                 if y_origen == y_destino or x_origen == x_destino:
                     self.check_camino_perpendicular(x_origen, y_origen, x_destino, y_destino)
 
-            elif isinstance(pieza, Peon):
+            elif pieza.puede_mover("peon"):
                 if y_origen == y_destino:
                     self.check_camino_vertical_peon(x_origen, x_destino, y_origen)
                 elif y_origen != y_destino:
                     self.check_camino_diagonal_peon(x_origen, y_origen, x_destino, y_destino)
 
-            elif isinstance(pieza, (Caballo, Rey)):
-                pass  # El caballo y el reyno tiene restricciones de camino
+            elif pieza.puede_mover("especial"):
+                pass  # El caballo y el rey no tiene restricciones de camino
 
             else:
                 raise ValueError("Movimiento inválido para esta pieza.")
