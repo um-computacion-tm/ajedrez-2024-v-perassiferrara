@@ -47,35 +47,6 @@ class Tablero():
     def set_pieza(self, x, y, objeto):
         self.__cuadricula__[x][y] = objeto
 
-    def cuadricula(self, x = None, y = None):
-        return self.__cuadricula__[x][y]
- 
- 
-
-    #Checks de seleccion de pieza origen
-
-    def checkCasillaVacia(self, pieza):
-        # Verificar si la posición seleccionada está vacía
-        if isinstance(pieza, Casilla):
-            raise EmptyError("No hay ninguna pieza en la casilla")
-
-
-    #Checks de movimiento de pieza origen a destino
-
-    def checkDestino(self, pieza, pieza_destino):
-        # Verificar si la casilla de destino está ocupada por una pieza aliada
-        
-        # Si está ocupada por una pieza aliada, manda un error
-        if isinstance(pieza_destino, Pieza) and pieza_destino.color == pieza.color: 
-            raise ValueError("No se puede mover porque la casilla destino está ocupada por una pieza aliada")
-        
-        # Si está ocupada por una pieza oponente, devuelve True
-        elif isinstance(pieza_destino, Pieza) and pieza_destino.color != pieza.color:
-            return True
-        
-        # Si no está ocupada por ninguna pieza, devuelve False
-        else:
-            return False
 
     def __str__(self):
 
