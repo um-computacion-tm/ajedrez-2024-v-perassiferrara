@@ -27,3 +27,6 @@ class Pieza():
             # Cambiar coordenadas de la pieza
             self.__x__ = x_destino 
             self.__y__ = y_destino
+
+    def checkMovimiento(self, x_destino, y_destino):
+        pass

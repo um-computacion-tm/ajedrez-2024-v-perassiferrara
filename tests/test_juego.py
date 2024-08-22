@@ -90,7 +90,7 @@ class TestJuego(unittest.TestCase):
         self.__juego__.tablero.set_pieza(2, 2, peon_negro)
 
         # Movimiento válido
-        self.assertIsNone(self.__juego__.validar_destino(6, 6, 5, 6))
+        self.assertTrue(self.__juego__.validar_destino(6, 6, 5, 6))
 
         # Mover a la misma casilla debería lanzar excepción
         with self.assertRaises(ValueError):

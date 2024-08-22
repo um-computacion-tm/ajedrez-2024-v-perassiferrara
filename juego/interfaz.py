@@ -35,14 +35,15 @@ class CLI:
 
             opcion = input("--> ")
             try:
-                resultado = self.__juego__.seleccionar_opcion(opcion)
+                if opcion not in ("1", "2"):
+                    raise SelectionError("Opcion no valida")
 
-                if resultado == "Cerrando juego":
-                    print("\n" + resultado + "\n")
+                elif opcion == "2":
+                    print("\n" + "Cerrando juego" + "\n")
                     sys.exit()
 
-                elif resultado == "Juego iniciado":
-                    print(("\n") + (self.__juego__.iniciar_juego()))
+                elif opcion == "1":
+                    print(("\n") + "Juego Iniciado" + "\n" + (self.__juego__.iniciar_juego()))
                     self.mostrar_menu_juego()
             
             except SelectionError as e:
@@ -85,7 +86,7 @@ class CLI:
 
                 x_destino, y_destino = self.traducir_a_coordenadas(entrada_destino)
 
-                pieza_destino = self.__juego__.validar_destino(x_origen, y_origen, x_destino, y_destino)
+                self.__juego__.validar_destino(x_origen, y_origen, x_destino, y_destino)
                 
                 resultado_movimiento = self.__juego__.mover_pieza(x_origen, y_origen, x_destino, y_destino)
 
