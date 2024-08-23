@@ -1,8 +1,10 @@
 [run]
-source = main
+source =
+    juego
 omit =
+    excepciones.py
+    */test.py 
     venv/*
-    */test/*
     */__init__.py
 [report]
 exclude_lines =
@@ -15,3 +17,4 @@ exclude_lines =
     if __name__ == "__main__":
     def suite
     __str__
+    main()
