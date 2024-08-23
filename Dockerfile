@@ -12,9 +12,9 @@ WORKDIR /ajedrez-2024-v-perassiferrara
 RUN pip install -r requirements.txt
 # instala dependencias y requirements
 
-CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python -m juego.interfaz.py"]
+CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python -m juego.interfaz"]
 
 
 # comandos para ejecutar el programa en una imagen de docker
-    # docker buildx build -t ajedrez_vpf .
+    # docker buildx build --no-cache -t ajedrez_vpf .
     # docker run -i ajedrez_vpf
