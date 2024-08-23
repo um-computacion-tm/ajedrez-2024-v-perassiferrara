@@ -1,35 +1,38 @@
 from juego.pieza import Pieza
 
-class Peon(Pieza):
+class Peon(Pieza): # Definición de la clase Peon que hereda de la clase Pieza
 
     def __init__(self, color, x, y):
         super().__init__(color, x, y)
         self.__primera_posicion__ = True # Indica si la instancia de peón está en su posición inicial
 
-    __nombre__ = "Peón"
-    __tipos_movimiento__ = ("peon")
+    __nombre__ = "Peón" # Nombre del tipo de pieza
+    __tipos_movimiento__ = ("peon") # El peón permite movimientos de tipo peón
 
     @property
     def primera_posicion(self):
         return self.__primera_posicion__
     
-    def set_primera_posicion(self, primera_posicion):
+    def set_primera_posicion(self, primera_posicion): # Método que establece la propiedad primera_posicion
         self.__primera_posicion__ = primera_posicion
 
     def __str__(self):
-        return "♟" if self.__color__ == "blanco" else "♙"
+        return "♟" if self.__color__ == "blanco" else "♙" # Retorna el carácter gráfico del peón para mostrar
 
-    def checkMovimiento(self, x_destino, y_destino):
+    def checkMovimiento(self, x_destino, y_destino): # Método que define cómo se puede mover el peón
         direccion = -1 if self.__color__ == "blanco" else 1
 
         if self.checkMovimiento1Casilla(x_destino, y_destino, direccion):
+            # Verifica si el peón puede avanzar una casilla hacia adelante
             return True
         
         if self.checkMovimiento2Casillas(x_destino, y_destino, direccion):
+            # Verifica si el peón puede avanzar dos casillas hacia adelante
             return True
         
         if self.checkMovimientoDiagonal(x_destino, y_destino, direccion):
-            return True
+            # Verifica si el peón puede avanzar en diagonal
+            return True # 
         
         # Movimiento inválido
         raise ValueError("Movimiento inválido para el peón.")

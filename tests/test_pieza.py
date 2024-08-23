@@ -11,7 +11,7 @@ from juego.caballo import *
 from juego.alfil import *
 from juego.dama import *
 from juego.rey import *
-
+from unittest.mock import MagicMock
 
 
 class TestPieza(unittest.TestCase):
@@ -19,11 +19,6 @@ class TestPieza(unittest.TestCase):
 
     def setUp(self):
         self.__juego__ = JuegoAjedrez()
-
-    # El checkMovimiento de la clase Pieza no hace nada por sí solo, ya que debe ser implementado en cada pieza
-    def test_check_movimiento_pass(self): 
-        a = Pieza("blanco", 0, 0)
-        self.assertEqual(a.checkMovimiento(2,2), None)
 
     def test_mover_pieza_exito(self): # Con este método solo se cambian las coordenadas internas
         torre = self.__juego__.get_pieza(0, 0)
@@ -57,7 +52,20 @@ class TestPieza(unittest.TestCase):
         self.assertTrue(self.__juego__.mover_pieza(6, 0, 4, 0))
         self.assertEqual((peon.x,peon.y), (4, 0))
 
+    def test_validar_destino_sin_tipo_de_movimiento(self):
+        pieza = MagicMock(Pieza) # Creo una pieza mock sin tipo de movimiento definido
+        pieza.x = 4 # Asigno los demas atributos de la pieza normalmente
+        pieza.y = 4
+        pieza.nombre = "Pieza Mock"
+        pieza.color = "blanco"
+        pieza.checkMovimiento = MagicMock(return_value=True)  # Creo un metodo mock para verificar si el movimiento es válido
+        pieza.puede_mover = MagicMock(return_value=False)  # Creo un metodo mock para indicar si el tipo de movimiento coincide
+        self.__juego__.tablero.set_pieza(4, 4, pieza)
+        with self.assertRaises(ValueError):
+            self.__juego__.validar_destino(4, 4, 5, 5)
 
+        # Verifica que el metodo validar_destino lanza un error al revisar piezas sin tipo de movimiento definido 
+        # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
 class TestCasilla(unittest.TestCase):
 

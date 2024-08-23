@@ -34,7 +34,3 @@ class Pieza():
     def mover(self, x_destino, y_destino):
             self.__x__ = x_destino 
             self.__y__ = y_destino
-
-    # Método a implementar en cada pieza para indicar como se puede mover 
-    def checkMovimiento(self, x_destino, y_destino): 
-        pass
