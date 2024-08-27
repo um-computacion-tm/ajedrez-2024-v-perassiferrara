@@ -1,6 +1,24 @@
 # Proyecto Ajedrez 2024
 
-Esta es una implementación básica del juego de ajedrez en Python.
+Esta es una implementación básica simplificada del juego de ajedrez en Python.
+
+## Cómo Jugar
+
+La manera de correr el código es utilizando docker, para lo cual se deben correr los siguientes comandos:
+
+```
+
+# Para crear la imagen de docker con el juego
+
+$ sudo docker buildx build --no-cache -t ajedrez_vpf .
+
+
+# Para poder ejecutar los tests y posteriormente iniciar el juego:
+
+$ sudo docker run -i ajedrez_vpf
+
+```
+
 
 
 
