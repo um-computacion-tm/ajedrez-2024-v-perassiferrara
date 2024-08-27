@@ -214,7 +214,6 @@ class JuegoAjedrez:
 
 
     def mover_pieza(self, x_origen, y_origen, x_destino, y_destino):
-        # Verifica si la casilla de destino está ocupada por una pieza enemiga
 
         pieza = self.get_pieza(x_origen, y_origen)
         pieza_destino = self.get_pieza(x_destino, y_destino)
