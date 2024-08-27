@@ -11,11 +11,6 @@ Para instalar docker:
 $ sudo apt install docker
 ```
 
-Para obtener una imagen de Python Alpine:
-```
-$ sudo docker pull python:3-alpine
-```
-
 Para crear la imagen de docker con el juego:
 ```
 $ sudo docker buildx build --no-cache -t ajedrez_vpf .
