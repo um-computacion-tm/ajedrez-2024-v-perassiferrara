@@ -25,6 +25,8 @@ class Pieza():
     def y(self):
         return self.__y__
 
+    def __str__(self): # Método que devuelve el carácter gráfico de la pieza para mostrar
+        return self.__str_blanco__ if self.__color__ == "blanco" else self.__str_negro__
 
     # Método que devuelve True si el tipo de movimiento es permitido por la pieza
     def puede_mover(self, tipo_movimiento):

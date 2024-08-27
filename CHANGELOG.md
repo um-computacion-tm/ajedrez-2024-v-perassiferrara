@@ -5,6 +5,35 @@ Todos los cambios notables de este proyecto se documentarán en este archivo.
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2024-08-27 (Segunda semana de desarrollo)
+
+### Agregado
+
+- Tests para flujos de la interfaz.
+- Tests adicionales de juego y piezas.
+
+### Modificado
+
+- Método __str__ en piezas para que no tenga que definirse en cada subclase de pieza.
+- Break al cerrar el juego, en favor de sys.exit.
+- Dividido menú principal y de juego en: menú principal, menú de juego y menú de selección de piezas / movimiento.
+- Reestructurado método de check de victorias.
+- Reestructuración de métodos de check de destinos y caminos de movimientos hacia clase juego.
+- Modo de check de primera posición en peones para cumplir de mejor manera con SOLID.
+- Manejo de returns, errores e inputs entre interfaz y juego.
+- Modificados str en piezas para poder definirlos en la clase de la que heredan (Pieza).
+
+### Solucionado
+
+- Problema de loops al ganar un partido.
+
+### Eliminado
+
+- Try y Except innecesarios.
+- Tests redundantes de juego.
+- Método turno_actual(), ya que era innecesario.
+- 
+
 ## [0.7.0] - 2024-08-19
 
 ### Modificado
@@ -62,7 +91,10 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 - Eliminados prints de errores en piezas, reemplazados por raises.
 - Sustituidos prints de acciones por returns.
 - Creada subclase de excepción SelectionCancel para cancelar selección de pieza.
-- Eliminados prints vacíos en Interfaz para simplificar la función.
+
+### Eliminado
+
+- Prints vacíos en Interfaz para simplificar la función.
 
 ### Solucionado
 

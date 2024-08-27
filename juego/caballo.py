@@ -5,8 +5,8 @@ class Caballo(Pieza): # Definición de la clase Caballo que hereda de la clase P
     __nombre__ = "Caballo" # Nombre del tipo de pieza
     __tipos_movimiento__ = ("especial") # El caballo permite movimientos de tipo especial
 
-    def __str__(self):
-        return "♞" if self.color == "blanco" else "♘" # Retorna el carácter gráfico del caballo para mostrar
+    __str_blanco__ = "♞" # Carácter gráfico del caballo para mostrar en blanco
+    __str_negro__ = "♘" # Carácter gráfico del caballo para mostrar en negro
 
     def checkMovimiento(self, x_destino, y_destino): # Método que define cómo se puede mover el caballo
 
