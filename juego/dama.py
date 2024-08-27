@@ -5,8 +5,8 @@ class Dama(Pieza): # Definición de la clase Dama que hereda de la clase Pieza
     __nombre__ = "Dama" # Nombre del tipo de pieza
     __tipos_movimiento__ = ("perpendicular", "diagonal") # La dama permite movimientos de tipo perpendicular y diagonal
 
-    def __str__(self):
-        return "♛" if self.__color__ == "blanco" else "♕" # Retorna el carácter gráfico de la dama para mostrar
+    __str_blanco__ = "♛" # Carácter gráfico de la dama para mostrar en blanco
+    __str_negro__ = "♕" # Carácter gráfico de la dama para mostrar en negro
 
     def checkMovimiento(self, x_destino, y_destino): # Método que define cómo se puede mover la dama
 

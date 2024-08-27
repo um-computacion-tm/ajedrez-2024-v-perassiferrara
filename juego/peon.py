@@ -9,6 +9,9 @@ class Peon(Pieza): # Definición de la clase Peon que hereda de la clase Pieza
     __nombre__ = "Peón" # Nombre del tipo de pieza
     __tipos_movimiento__ = ("peon") # El peón permite movimientos de tipo peón
 
+    __str_blanco__ = "♟" # Carácter gráfico del peón para mostrar en blanco
+    __str_negro__ = "♙" # Carácter gráfico del peón para mostrar en negro
+
     @property
     def primera_posicion(self):
         return self.__primera_posicion__
@@ -16,8 +19,6 @@ class Peon(Pieza): # Definición de la clase Peon que hereda de la clase Pieza
     def set_primera_posicion(self, primera_posicion): # Método que establece la propiedad primera_posicion
         self.__primera_posicion__ = primera_posicion
 
-    def __str__(self):
-        return "♟" if self.__color__ == "blanco" else "♙" # Retorna el carácter gráfico del peón para mostrar
 
     def checkMovimiento(self, x_destino, y_destino): # Método que define cómo se puede mover el peón
         direccion = -1 if self.__color__ == "blanco" else 1

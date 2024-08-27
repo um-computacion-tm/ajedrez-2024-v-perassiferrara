@@ -5,8 +5,8 @@ class Alfil(Pieza): # Definición de la clase Alfil que hereda de la clase Pieza
     __nombre__ = "Alfil" # Nombre del tipo de pieza
     __tipos_movimiento__ = ("diagonal") # El alfil permite movimientos de tipo diagonal
 
-    def __str__(self):
-        return "♝" if self.__color__ == "blanco" else "♗" # Retorna el carácter gráfico del alfil para mostrar
+    __str_blanco__ = "♝" # Carácter gráfico del alfil para mostrar en blanco
+    __str_negro__ = "♗" # Carácter gráfico del alfil para mostrar en negro
 
     def checkMovimiento(self, x_destino, y_destino): # Método que define cómo se puede mover el alfil
 
