@@ -1,3 +1,4 @@
+from juego.excepciones import PeonMovementError
 from juego.pieza import Pieza
 
 class Peon(Pieza): # Definición de la clase Peon que hereda de la clase Pieza
@@ -36,7 +37,7 @@ class Peon(Pieza): # Definición de la clase Peon que hereda de la clase Pieza
             return True # 
         
         # Movimiento inválido
-        raise ValueError("Movimiento inválido para el peón.")
+        raise PeonMovementError()
 
 
 

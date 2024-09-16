@@ -79,7 +79,7 @@ class TestJuego(unittest.TestCase):
         # Seleccionar una pieza del color incorrecto debería lanzar excepción
         peon_negro = Peon("negro", 6, 6)
         self.__juego__.tablero.set_pieza(6, 6, peon_negro)
-        with self.assertRaises(ColorError):
+        with self.assertRaises(OppositeColorError):
             self.__juego__.validar_origen(6, 6)
 
     def test_validar_destino(self):
@@ -93,15 +93,15 @@ class TestJuego(unittest.TestCase):
         self.assertTrue(self.__juego__.validar_destino(6, 6, 5, 6))
 
         # Mover a la misma casilla debería lanzar excepción
-        with self.assertRaises(ValueError):
+        with self.assertRaises(SamePositionError):
             self.__juego__.validar_destino(1, 1, 1, 1)
 
         # Mover a una casilla fuera del tablero debería lanzar excepción
-        with self.assertRaises(ValueError):
+        with self.assertRaises(OutOfBoardError):
             self.__juego__.validar_destino(1, 1, 9, 9)
 
         # Seleccionar una casilla fuera del tablero debería lanzar excepción
-        with self.assertRaises(ValueError):
+        with self.assertRaises(OutOfBoardError):
             self.__juego__.validar_origen(9, 9)
 
     def test_mover_pieza(self):

@@ -1,4 +1,3 @@
-from juego.excepciones import *
 from juego.pieza import *
 from juego.casilla import *
 from juego.peon import *
