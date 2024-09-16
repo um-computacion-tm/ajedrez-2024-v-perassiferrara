@@ -53,14 +53,14 @@ class JuegoAjedrez:
     def checkMismaCasilla(self, x_origen, y_origen, x_destino, y_destino):
         # Verificar si la casilla de origen y destino son diferentes (deben serlo para que el movimiento sea válido)
         if x_origen == x_destino and y_origen == y_destino:
-            raise ValueError("No se puede mover a la misma casilla")
+            raise SamePositionError()
         
 
     def checkDestino(self, x_origen, y_origen, x_destino, y_destino):
 
         # Verificar si la casilla de destino está dentro del tablero
         if not (0 <= x_destino <= 7 and 0 <= y_destino <= 7):
-            raise ValueError("Posición no válida. Use casillas del tablero (a-h y 1-8)")
+            raise OutOfBoardError()
         
         pieza = self.get_pieza(x_origen, y_origen)
         pieza_destino = self.get_pieza(x_destino, y_destino)
@@ -70,7 +70,7 @@ class JuegoAjedrez:
 
         # Si está ocupada por una pieza aliada, lanza un error
         if isinstance(pieza_destino, Pieza) and pieza_destino.color == pieza.color: 
-            raise ValueError("No se puede mover porque la casilla destino está ocupada por una pieza aliada")
+            raise DestinationError("No se puede mover porque la casilla destino está ocupada por una pieza aliada")
         
         # Si está ocupada por una pieza oponente, devuelve True
         elif isinstance(pieza_destino, Pieza) and pieza_destino.color != pieza.color:
@@ -84,17 +84,17 @@ class JuegoAjedrez:
 
         # Verificar si la casilla de origen está dentro del tablero
         if x_origen < 0 or x_origen > 7 or y_origen < 0 or y_origen > 7:
-            raise ValueError("Posición fuera del tablero")
+            raise OutOfBoardError()
 
         pieza = self.__tablero__.get_pieza(x_origen, y_origen)
 
         # Verificar si la posición seleccionada está vacía
         if isinstance(pieza, Casilla):
-            raise EmptyError("No hay ninguna pieza en la casilla")
+            raise EmptyError()
 
         # Verifica si la pieza pertenece al jugador que tiene el turno actual
         if pieza.color != self.__turno__:
-            raise ColorError("No puedes seleccionar piezas de tu oponente")
+            raise OppositeColorError()
 
         return pieza
 
@@ -135,11 +135,11 @@ class JuegoAjedrez:
                 pass
 
             else:
-                raise ValueError("La pieza no tiene movimientos permitidos.")
+                raise MovementError("La pieza no tiene movimientos permitidos.")
 
             return True  # Si no hubo excepciones, el movimiento es válido
 
-        except ValueError as e:
+        except Exception as e:
             raise e    
 
 
@@ -161,10 +161,10 @@ class JuegoAjedrez:
         for coordenada_comparacion in range(coordenada_origen + paso, coordenada_destino, paso):
             if movimiento == "vertical":
                 if isinstance(self.get_pieza(coordenada_comparacion,y_origen), Pieza):
-                    raise ValueError("No se puede mover porque hay una pieza en el camino")
+                    raise PathError()
             elif movimiento == "horizontal":
                 if isinstance(self.get_pieza(x_origen,coordenada_comparacion), Pieza):
-                    raise ValueError("No se puede mover porque hay una pieza en el camino")   
+                    raise PathError()   
 
     def check_camino_diagonal(self, x_origen, y_origen, x_destino, y_destino):
         # Verifica si hay alguna pieza en el camino cuando se mueve en diagonal
@@ -174,7 +174,7 @@ class JuegoAjedrez:
 
         while x_comparacion != x_destino and y_comparacion != y_destino:
             if isinstance(self.get_pieza(x_comparacion,y_comparacion), Pieza):
-                raise ValueError("No se puede mover porque hay una pieza en el camino")
+                raise PathError()
             x_comparacion += paso_x
             y_comparacion += paso_y
         
@@ -187,7 +187,7 @@ class JuegoAjedrez:
         # Movimiento normal de una casilla hacia adelante
         if x_destino == x_origen + paso:
             if isinstance(self.get_pieza(x_destino, y_origen), Pieza):
-                raise ValueError("No se puede mover porque hay una pieza en el destino")
+                raise DestinationError("No se puede mover porque hay una pieza en el destino")
             return True
 
         # Movimiento inicial de dos casillas: Comprueba el atributo primera_posicion. Si es True
@@ -195,10 +195,10 @@ class JuegoAjedrez:
         if x_destino == x_origen + 2 * paso and self.get_pieza(x_origen, y_origen).primera_posicion:
             for x_comparacion in range(x_origen + paso, x_destino + paso, paso):
                 if isinstance(self.get_pieza(x_comparacion, y_origen), Pieza):
-                    raise ValueError("No se puede mover porque hay una pieza en el camino")
+                    raise PathError()
             return True
 
-        raise ValueError("Movimiento inválido para el peón.")
+        raise PeonMovementError()
 
     def check_camino_diagonal_peon(self, x_origen, y_origen, x_destino, y_destino):
         # Verifica si el peón puede capturar una pieza en diagonal
@@ -209,7 +209,7 @@ class JuegoAjedrez:
         if isinstance(pieza_destino, Pieza) and pieza_destino.color != pieza_origen.color:
             return True  # Movimiento válido (captura)
         else:
-            raise ValueError("Movimiento inválido para el peón: no puede moverse en diagonal sin capturar.")
+            raise PeonMovementError()
         
 
 

@@ -24,7 +24,7 @@ class TestTraducirCoordenadas(unittest.TestCase):
         self.assertEqual(self.__interfaz__.traducir_a_coordenadas("D5"), (3, 3))
 
     def test_traducir_a_coordenadas_invalida(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(CoordinatesError):
             self.__interfaz__.traducir_a_coordenadas("Z9")
             self.__interfaz__.traTestInterfazducir_a_coordenadas("D0")
             self.__interfaz__.traducir_a_coordenadas("A14")
@@ -61,7 +61,7 @@ class TestMenusIniciales(unittest.TestCase):
 
         self.assertEqual(mock_print.call_count, 14) # El flujo incluye 14 llamada a print
 
-        mock_print.assert_any_call("\nOpcion no valida\n")
+        mock_print.assert_any_call("\nOpción no valida\n")
         # El flujo llama al menos una vez a un print con este contenido, ya que se atrapo la excepcion
 
         self.assertEqual(mock_input.call_count, 7) # El flujo incluye 7 llamadas a input

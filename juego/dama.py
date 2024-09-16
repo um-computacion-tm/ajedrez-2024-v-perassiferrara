@@ -1,3 +1,4 @@
+from juego.excepciones import DamaMovementError
 from juego.pieza import Pieza
 
 class Dama(Pieza): # Definición de la clase Dama que hereda de la clase Pieza
@@ -11,6 +12,6 @@ class Dama(Pieza): # Definición de la clase Dama que hereda de la clase Pieza
     def checkMovimiento(self, x_destino, y_destino): # Método que define cómo se puede mover la dama
 
         if (x_destino != self.__x__ and y_destino != self.__y__) and abs(x_destino - self.__x__) != abs(y_destino - self.y):
-            raise ValueError("Movimiento inválido para la Dama. Debe moverse en una línea recta horizontal, vertical o diagonal.")
+            raise DamaMovementError()
 
         return True # Retorna True si el movimiento es permitido por la dama

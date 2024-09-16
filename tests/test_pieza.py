@@ -30,7 +30,7 @@ class TestPieza(unittest.TestCase):
         self.assertEqual((torre.x,torre.y), (8, 3))
 
     def test_check_misma_casilla(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(SamePositionError):
             self.__juego__.checkMismaCasilla(0, 0, 0, 0)
 
     def test_check_destino_pieza_rival(self):
@@ -61,7 +61,7 @@ class TestPieza(unittest.TestCase):
         pieza.checkMovimiento = MagicMock(return_value=True)  # Creo un metodo mock para verificar si el movimiento es válido
         pieza.puede_mover = MagicMock(return_value=False)  # Creo un metodo mock para indicar si el tipo de movimiento coincide
         self.__juego__.tablero.set_pieza(4, 4, pieza)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(MovementError):
             self.__juego__.validar_destino(4, 4, 5, 5)
 
         # Verifica que el metodo validar_destino lanza un error al revisar piezas sin tipo de movimiento definido 
@@ -98,23 +98,23 @@ class TestAlfil(unittest.TestCase):
         self.assertTrue(self.__juego__.validar_destino(4, 4, 3, 5))
 
     def test_alfil_movimiento_no_diagonal(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(AlfilMovementError):
             self.__juego__.validar_destino(4, 4, 4, 6)  # Movimiento horizontal
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(AlfilMovementError):
             self.__juego__.validar_destino(4, 4, 6, 4)  # Movimiento vertical
 
     def test_alfil_movimiento_bloqueado(self):
         pieza_bloqueo = Peon("blanco", 5, 5)
         self.__juego__.tablero.set_pieza(5, 5, pieza_bloqueo)
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PathError):
             self.__juego__.validar_destino(4, 4, 6, 6)
     
     def test_alfil_movimiento_bloqueado2(self):
         pieza_bloqueo = Peon("blanco", 6, 6)
         self.__juego__.tablero.set_pieza(6, 6, pieza_bloqueo)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(DestinationError):
             self.__juego__.validar_destino(4, 4, 6, 6)
 
     def test_alfil_movimiento_bloqueado_por_varias_piezas(self):
@@ -123,11 +123,11 @@ class TestAlfil(unittest.TestCase):
         self.__juego__.tablero.set_pieza(5, 5, pieza_bloqueo1)
         self.__juego__.tablero.set_pieza(6, 6, pieza_bloqueo2)
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PathError):
             self.__juego__.validar_destino(4, 4, 7, 7)
 
     def test_alfil_movimiento_misma_posicion(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(SamePositionError):
             self.__juego__.validar_destino(4, 4, 4, 4)
 
 
@@ -147,7 +147,7 @@ class TestPeon(unittest.TestCase):
     def test_peon_movimiento_avance_uno_no_valido(self):
         #Verifica que el peón no puede moverse una casilla hacia adelante si está ocupada por otra pieza.
         self.__juego__.tablero.set_pieza(2, 4, Peon("blanco", 2, 4))
-        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 2, 4))
+        self.assertRaises(DestinationError, lambda: self.__juego__.validar_destino(1, 4, 2, 4))
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
     def test_peon_movimiento_avance_dos_valido(self):
@@ -157,13 +157,13 @@ class TestPeon(unittest.TestCase):
     def test_peon_movimiento_avance_dos_no_valido(self):
         #Verifica que el peón no puede moverse dos casillas si no está en la posición inicial.
         self.assertTrue(self.__juego__.mover_pieza(1, 4, 2, 4))
-        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(2, 4, 4, 4))
+        self.assertRaises(PeonMovementError, lambda: self.__juego__.validar_destino(2, 4, 4, 4))
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
     def test_peon_movimiento_avance_dos_no_valido2(self):
         #Verifica que el peón no puede moverse dos casillas si hay una pieza en el camino.
         self.__juego__.tablero.set_pieza(2, 4, Peon("blanco", 2, 4))
-        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 3, 4))
+        self.assertRaises(PathError, lambda: self.__juego__.validar_destino(1, 4, 3, 4))
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
     def test_peon_movimiento_diagonal_captura_valida(self):
@@ -174,17 +174,17 @@ class TestPeon(unittest.TestCase):
 
     def test_peon_movimiento_diagonal_no_captura(self):
         #Verifica que el peón no puede moverse en diagonal si no hay una pieza para capturar.
-        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 2, 3))
+        self.assertRaises(PeonMovementError, lambda: self.__juego__.validar_destino(1, 4, 2, 3))
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
     def test_peon_movimiento_no_valido(self):
         #Verifica que el peón no puede moverse en direcciones no permitidas.
-        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 1, 5))  # Movimiento horizontal
+        self.assertRaises(PeonMovementError, lambda: self.__juego__.validar_destino(1, 4, 1, 5))  # Movimiento horizontal
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
     def test_peon_movimiento_misma_posicion(self):
         #Verifica que el peón no puede moverse a la misma posición en la que ya está.
-        self.assertRaises(ValueError, lambda: self.__juego__.validar_destino(1, 4, 1, 4))
+        self.assertRaises(SamePositionError, lambda: self.__juego__.validar_destino(1, 4, 1, 4))
         # Aca tuve que utilizar lambda para poder capturar el error que se lanza
 
 
@@ -208,10 +208,10 @@ class TestTorre(unittest.TestCase):
         self.assertTrue(self.__juego__.validar_destino(4, 4, 6, 4))  # Movimiento vertical hacia arriba
 
     def test_torre_movimiento_diagonal_no_valido(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TorreMovementError):
             self.__juego__.validar_destino(4, 4, 6, 6)  # Movimiento diagonal
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TorreMovementError):
             self.__juego__.validar_destino(4, 4, 2, 6)  # Movimiento diagonal
 
     def test_torre_movimiento_bloqueado(self):
@@ -220,10 +220,10 @@ class TestTorre(unittest.TestCase):
         self.__juego__.tablero.set_pieza(4, 5, pieza_bloqueo)
         self.__juego__.tablero.set_pieza(5, 4, pieza_bloqueo2)
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PathError):
             self.__juego__.validar_destino(4, 4, 4, 6)  # Movimiento horizontal bloqueado
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PathError):
             self.__juego__.validar_destino(4, 4, 6, 4)  # Movimiento vertical bloqueado
 
     def test_torre_movimiento_bloqueado_por_varias_piezas(self):
@@ -232,10 +232,10 @@ class TestTorre(unittest.TestCase):
         self.__juego__.tablero.set_pieza(4, 5, pieza_bloqueo1)
         self.__juego__.tablero.set_pieza(4, 6, pieza_bloqueo2)
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PathError):
             self.__juego__.validar_destino(4, 4, 4, 7)  # Movimiento horizontal bloqueado por múltiples piezas
 
-  
+
 
 class TestRey(unittest.TestCase):
 
@@ -263,13 +263,13 @@ class TestRey(unittest.TestCase):
         self.assertTrue(self.__juego__.validar_destino(4, 4, 3, 3))  # Movimiento en diagonal hacia arriba a la izquierda
 
     def test_rey_movimiento_invalido(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ReyMovementError):
             self.__juego__.validar_destino(4, 4, 6, 6)  # Movimiento de dos casillas en diagonal
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ReyMovementError):
             self.__juego__.validar_destino(4, 4, 4, 6)  # Movimiento de dos casillas en la misma fila
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ReyMovementError):
             self.__juego__.validar_destino(4, 4, 6, 4)  # Movimiento de dos casillas en la misma columna
 
 
@@ -293,16 +293,16 @@ class TestCaballo(unittest.TestCase):
         self.assertTrue(self.__juego__.validar_destino(4, 4, 2, 3))  # Movimiento válido
 
     def test_caballo_movimiento_invalido(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(CaballoMovementError):
             self.__juego__.validar_destino(4, 4, 5, 5)  # Movimiento inválido (no en forma de 'L')
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(CaballoMovementError):
             self.__juego__.validar_destino(4, 4, 4, 6)  # Movimiento inválido (no en forma de 'L')
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(CaballoMovementError):
             self.__juego__.validar_destino(4, 4, 7, 7)  # Movimiento inválido (no en forma de 'L')
 
- 
+
 
 class TestDama(unittest.TestCase):
 
@@ -325,24 +325,24 @@ class TestDama(unittest.TestCase):
         self.assertTrue(self.__juego__.validar_destino(4, 4, 0, 4))  # Movimiento vertical válido
 
     def test_dama_movimiento_invalido(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(DamaMovementError):
             self.__juego__.validar_destino(4, 4, 7, 5)  # Movimiento inválido (no en línea recta)
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(DamaMovementError):
             self.__juego__.validar_destino(4, 4, 6, 3)  # Movimiento inválido (no en línea recta)
 
     def test_dama_movimiento_bloqueado(self):
         pieza_bloqueo = Peon("blanco", 5, 5)
         self.__juego__.tablero.set_pieza(5, 5, pieza_bloqueo)
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PathError):
             self.__juego__.validar_destino(4, 4, 6, 6)  # Movimiento bloqueado por una pieza
     
     def test_dama_movimiento_bloqueado2(self):
         pieza_bloqueo = Peon("blanco", 6, 6)
         self.__juego__.tablero.set_pieza(6, 6, pieza_bloqueo)
         
-        with self.assertRaises(ValueError):
+        with self.assertRaises(DestinationError):
             self.__juego__.validar_destino(4, 4, 6, 6) # Destino bloqueado por una pieza
 
 

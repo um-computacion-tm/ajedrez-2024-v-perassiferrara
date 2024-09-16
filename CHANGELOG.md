@@ -5,7 +5,14 @@ Todos los cambios notables de este proyecto se documentarán en este archivo.
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.8.0] - 2024-08-27 (Segunda semana de desarrollo)
+## [1.1.0] - 2024-09-16
+
+### Modificado
+
+- Modificados nombres genéricos de excepciones por más específicos.
+- Ajustados tests al cambio de las excepciones.
+
+## [1.0.0] - 2024-08-27 (Segunda semana de desarrollo. Release Inicial)
 
 ### Agregado
 
@@ -32,7 +39,6 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 - Try y Except innecesarios.
 - Tests redundantes de juego.
 - Método turno_actual(), ya que era innecesario.
-- 
 
 ## [0.7.0] - 2024-08-19
 

@@ -1,3 +1,4 @@
+from juego.excepciones import CoordinatesError
 from juego.juego import JuegoAjedrez
 import sys
 from juego.excepciones import *
@@ -22,7 +23,7 @@ class CLI:
             return x, y
         else:
             # Si la posición no es válida, lanza un error
-            raise ValueError("Posición no válida. Use casillas del tablero (a-h y 1-8)")
+            raise CoordinatesError()
 
     def traducir_a_posicion(self, fila, columna):
         # Convierte coordenadas (x, y) de la matriz del tablero a notación algebraica (a2, h8, etc.)
@@ -42,7 +43,7 @@ class CLI:
             opcion = (input("--> ")).strip() # Obtiene la opción ingresada por el usuario, eliminando espacios en blanco
             try:
                 if opcion not in ("1", "2"): # Lanza un error si la opción no es válida
-                    raise SelectionError("Opcion no valida")
+                    raise MenuOptionError()
 
                 elif opcion == "2": # Cierra el juego si se selecciona la opción 2
                     print("\n" + "Cerrando juego" + "\n")
@@ -55,7 +56,7 @@ class CLI:
                         
                     self.mostrar_menu_juego()
             
-            except SelectionError as e: # Captura y muestra el error si la opción no es válida
+            except MenuOptionError as e: # Captura y muestra el error si la opción no es válida
                 print("\n" + str(e) + "\n")
 
     def mostrar_menu_juego(self):
